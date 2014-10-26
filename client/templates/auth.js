@@ -4,15 +4,16 @@ Template.auth.rendered = function() {
 
 Template.auth.events({
   'keypress #password': function(evt) {
-    if (evt.which === 13) {
-      var user = $.jStorage.get('user', { passwords: {} })
+    if (Helpers.isEnter(evt)) {
+      var defaultUser = { _id: Math.random(), passwords: {}, nick: 'default Name' }
+      var user = $.jStorage.get('user', defaultUser)
       var roomName = Session.get('auth.roomName')
       var password = $('#password').val()
       Auth.toRoom(password, roomName, function(err, res) {
-        console.log(err)
         if (err) return alert(err)
         user.passwords[roomName] = password
         $.jStorage.set('user', user)
+        Users.upsert({ _id: user._id }, user)
         Router.go('/rooms/' + roomName)
       })
     }

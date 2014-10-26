@@ -6,7 +6,7 @@ Template.messages.helpers({
 
 Template.messages.events({
   'keypress #text_entry': function(evt) {
-    if (evt.which === 13) {
+    if (Helpers.isEnter(evt)) {
       Messages.insert({
         author: 'tomas',
         body: $('#text_entry').val()

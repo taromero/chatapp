@@ -1,6 +1,9 @@
 <template name='users'>
-  {{user.name}}
-  {{#each users}}
-    <div style='float:left;'>{{nick}}</div>
-  {{/each}}
+  <div>
+    <input id='nick' placeholder={{user.nick}} />
+    {{#each otherUsers}}
+      <div style='float:left;'>{{nick}}</div>
+    {{/each}}
+    <br/>
+  </div>
 </template>

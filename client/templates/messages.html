@@ -1,8 +1,10 @@
 <template name='messages'>
-  <input id='text_entry'/>
-  <ul>
-    {{#each messages}}
-      <li>{{author}} says: {{body}}</li>
-    {{/each}}
-  </ul>
+  <div>
+    <input id='text_entry' placeholder='Enter your message'/>
+    <ul>
+      {{#each messages}}
+        <li>{{author}} says: {{body}}</li>
+      {{/each}}
+    </ul>
+  </div>
 </template>
