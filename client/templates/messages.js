@@ -9,7 +9,8 @@ Template.messages.events({
     if (Helpers.isEnter(evt)) {
       Messages.insert({
         author: 'tomas',
-        body: $('#text_entry').val()
+        body: $('#text_entry').val(),
+        snapshot: Camera.takeSnapshot()
       })
     }
   }

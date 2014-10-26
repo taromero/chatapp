@@ -9,7 +9,6 @@ Template.users.helpers({
 
 Template.users.events({
   'keypress #nick': function(evt) {
-    debugger;
     if (Helpers.isEnter(evt)) {
       Users.upsert(Session.get('user')._id, { $set: { nick: $('#nick').val() } })
     }
