@@ -8,7 +8,7 @@ Template.messages.events({
   'keypress #text_entry': function(evt) {
     if (Helpers.isEnter(evt)) {
       Messages.insert({
-        author: 'tomas',
+        author: $('#nick').val(),
         body: $('#text_entry').val(),
         snapshot: Camera.takeSnapshot()
       })

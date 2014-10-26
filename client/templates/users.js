@@ -1,6 +1,13 @@
+Template.users.rendered = function() {
+  Meteor.setInterval(function() {
+    var snapshot = Camera.takeSnapshot()
+    Users.update(Session.get('user')._id, { $set: { snapshot: snapshot } })
+  }, 1000)
+}
+
 Template.users.helpers({
   otherUsers: function() {
-    return Users.find({ _id: { $ne:  Session.get('user')._id } })
+    return Users.find({ _id: { $ne: Session.get('user')._id } })
   },
   user: function() {
     return Users.findOne(Session.get('user')._id)

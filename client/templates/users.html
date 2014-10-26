@@ -1,9 +1,14 @@
 <template name='users'>
   <div>
-    {{> video}}
-    <input id='nick' placeholder={{user.nick}} />
+    <div style='float:left;width:70px;margin-right:10px;'>
+      {{> video}}
+      <input id='nick' placeholder={{user.nick}} style='width:64px'/>
+    </div>
     {{#each otherUsers}}
-      <div style='float:left;'>{{nick}}</div>
+      <div style='float:left;margin-right:10px;'>
+        <img src='{{snapshot}}'/>
+        <div>{{nick}}</div>
+      </div>
     {{/each}}
     <br/>
   </div>

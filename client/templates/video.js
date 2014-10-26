@@ -5,9 +5,7 @@ Template.video.rendered = function() {
 
   Camera.video.addEventListener('click', Camera.takeSnapshot, false)
 
-  navigator.getUserMedia = navigator.getUserMedia
-                          || navigator.webkitGetUserMedia
-                          || navigator.mozGetUserMedia
+  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
   // Not showing vendor prefixes or code that works cross-browser.
   navigator.getUserMedia({video: true}, function(stream) {
     Camera.video.src = window.URL.createObjectURL(stream)
