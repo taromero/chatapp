@@ -1,14 +1,4 @@
-<head>
-  <title>chatapp</title>
-</head>
-
-<body>
-  <h1>Welcome to Chatapp!</h1>
-
-  {{> app}}
-</body>
-
-<template name="app">
+<template name='messages'>
   <input id='text_entry'/>
   <ul>
     {{#each messages}}
