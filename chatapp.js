@@ -1,25 +1,28 @@
 Messages = new Meteor.Collection('messages')
 
 if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault("counter", 0);
+  Meteor.subscribe('messages')
 
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get("counter");
+  Template.app.helpers({
+    messages: function() {
+      return Messages.find()
     }
-  });
+  })
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set("counter", Session.get("counter") + 1);
+  Template.app.events({
+    'keypress #text_entry': function(evt) {
+      if (evt.which === 13) {
+        Messages.insert({
+          author: 'tomas',
+          body: $('#text_entry').val()
+        })
+      }
     }
-  });
+  })
 }
 
 if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
+  Meteor.publish("messages", function() {
+    return Messages.find()
+  })
 }
