@@ -1,6 +1,6 @@
 Template.messages.helpers({
   messages: function() {
-    return Messages.find()
+    return Messages.find({}, { sort: { timestamp: -1 } })
   }
 })
 
@@ -10,7 +10,8 @@ Template.messages.events({
       var message = {
         author: $('#nick').val(),
         body: $('#text_entry').val(),
-        snapshot: Camera.takeSnapshot()
+        snapshot: Camera.takeSnapshot(),
+        timestamp: new Date().getTime()
       }
       showNotification(message.author, message.body, message.snapshot)
       Messages.insert(message)
