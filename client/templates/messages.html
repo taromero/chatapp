@@ -1,10 +1,25 @@
 <template name='messages'>
   <div>
     <input id='text_entry' placeholder='Enter your message'/>
-    <ul>
-      {{#each messages}}
-        <li><img src='{{snapshot}}'/>{{author}} says: {{body}}</li>
-      {{/each}}
-    </ul>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th style='width:70px;'>Image</th>
+          <th>Message</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each messages}}
+          <tr>
+            <td>
+              <img src='{{snapshot}}' alt='{{author}}'/>
+            </td>
+            <td>
+              {{body}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
   </div>
 </template>
