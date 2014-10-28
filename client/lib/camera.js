@@ -6,7 +6,7 @@ Camera = {
   video: null,
   takeSnapshot: function() {
     if (Camera.localMediaStream) {
-      Camera.canvasCtx.drawImage(Camera.video, 0, 0, 50, 50)
+      Camera.canvasCtx.drawImage(Camera.video, 0, 0, 172, 140)
       return Camera.canvas.toDataURL('image/png')
     }
   }

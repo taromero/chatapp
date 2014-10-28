@@ -30,7 +30,8 @@ Template.messages.events({
         author: $('#nick').val() || $('#nick').attr('placeholder'),
         body: $('#text_entry').val(),
         snapshot: Camera.takeSnapshot(),
-        timestamp: new Date().getTime()
+        timestamp: new Date().getTime(),
+        effect: Session.get('status.class')
       }
       createMention(message)
       Messages.insert(message)

@@ -1,0 +1,30 @@
+video {
+  width: 172px;
+  height: 140px;
+  background: rgba(255,255,255,0.5);
+  border: 1px solid #ccc;
+}
+
+.snapshot {
+  width: 172px;
+  height: 140px;
+  background: rgba(255,255,255,0.5);
+  border: 1px solid #ccc;
+}
+
+.grayscale {
+  -webkit-filter: grayscale(1);
+  -moz-filter: grayscale(1);
+}
+.sepia {
+  -webkit-filter: sepia(1);
+  -moz-filter: sepia(1);
+}
+.blur {
+  -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+}
+.invert {
+  -webkit-filter: invert(1);
+  -moz-filter: invert(1);
+}

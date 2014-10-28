@@ -1,7 +1,7 @@
 Template.users.rendered = function() {
   Meteor.setInterval(function() {
     var snapshot = Camera.takeSnapshot()
-    Users.update(Session.get('user')._id, { $set: { snapshot: snapshot } })
+    Users.update(Session.get('user')._id, { $set: { snapshot: snapshot, effect: Session.get('status.class') } })
   }, 1000)
 }
 
