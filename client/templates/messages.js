@@ -20,19 +20,6 @@ Template.messages.events({
   }
 })
 
-function showNotification(msg) {
-  var notification = new Notification(msg.from, {
-    body: msg.body,
-    icon: msg.snapshot
-  })
-  notification.onclick = function() {
-    notification.close()
-  }
-  setTimeout(function() {
-    notification.close()
-  }, 5000)
-}
-
 function createMention(message) {
   var regex = /@\w+/g
   var matches = message.body.match(regex)

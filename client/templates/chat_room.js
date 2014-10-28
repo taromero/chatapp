@@ -16,6 +16,20 @@ Template.chat_room.rendered = function() {
     mentionsToUser.forEach(function(msg) {
       Mentions.remove(msg._id)
     })
+
+    function showNotification(msg) {
+      var notification = new Notification(msg.from, {
+        body: msg.body,
+        icon: msg.snapshot
+      })
+      notification.onclick = function() {
+        notification.close()
+      }
+      setTimeout(function() {
+        notification.close()
+      }, 5000)
+    }
+
   }
 }
 

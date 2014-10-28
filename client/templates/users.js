@@ -23,8 +23,14 @@ Template.users.events({
       Users.upsert(user._id, { $set: { nick: user.nick } })
     }
   },
-  'click .snapshot': function(evt) {
-    console.log('aaaaaaaaaaaaaa')
+  'dblclick .snapshot': function(evt) {
+    var kickedOutUserId = evt.currentTarget.id
+    Mentions.insert({
+      from: Session.get('user').nick,
+      to: 'all',
+      body: 'I removed ' + Users.findOne(parseFloat(kickedOutUserId)).nick + ' from the room',
+      snapshot: Camera.takeSnapshot()
+    })
     Meteor.call('kickout', Session.get('roomName'), evt.currentTarget.id)
   }
 })
