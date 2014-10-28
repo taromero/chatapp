@@ -2,10 +2,10 @@ Template.messages.rendered = function() {
   Tracker.autorun(showMentions)
 
   function showMentions() {
-    console.log('asdf')
     var user = Session.get('user')
-    var mentionsToUser = Mentions.find({ to: user.nick })
+    var mentionsToUser = Mentions.find({ to: { $in: [user.nick, 'all'] }, from: { $ne: user.nick } })
     mentionsToUser.forEach(function(msg) {
+      console.log('msg ' , msg);
       showNotification(msg)
     })
     // remove them after they are displayed.
@@ -27,7 +27,7 @@ Template.messages.events({
   'keypress #text_entry': function(evt) {
     if (Helpers.isEnter(evt)) {
       var message = {
-        author: $('#nick').val(),
+        author: $('#nick').val() || $('#nick').attr('placeholder'),
         body: $('#text_entry').val(),
         snapshot: Camera.takeSnapshot(),
         timestamp: new Date().getTime()
