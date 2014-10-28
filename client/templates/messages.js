@@ -16,6 +16,7 @@ Template.messages.events({
       }
       createMention(message)
       Messages.insert(message)
+      $('#text_entry').val('')
     }
   }
 })
