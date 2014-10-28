@@ -2,8 +2,8 @@ Meteor.publish('messages', function() {
   return Messages.find()
 })
 
-Meteor.publish('users', function() {
-  return Users.find()
+Meteor.publish('users', function(roomName) {
+  return Users.find({ connectedTo: { $elemMatch: { $in: [roomName] } } })
 })
 
 Meteor.publish('mentions', function() {

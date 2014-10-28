@@ -15,13 +15,17 @@ Template.users.helpers({
 })
 
 Template.users.events({
-  'keypress #nick': function(evt) {
+  'keypress #nick, focusout #nick': function(evt) {
     if (Helpers.isEnter(evt)) {
       var user = Session.get('user')
       user.nick = $('#nick').val()
       Session.set('user', user)
       Users.upsert(user._id, { $set: { nick: user.nick } })
     }
+  },
+  'click .snapshot': function(evt) {
+    console.log('aaaaaaaaaaaaaa')
+    Meteor.call('kickout', Session.get('roomName'), evt.currentTarget.id)
   }
 })
 

@@ -18,12 +18,16 @@ Router.route('room', {
   template: 'chat_room',
   waitOn: function() {
     return [
-      Meteor.subscribe('users'),
+      Meteor.subscribe('users', this.params.room),
       Meteor.subscribe('messages'),
       Meteor.subscribe('mentions')
     ]
   },
+  data: function() {
+    return { roomName: this.params.room }
+  },
   onBeforeAction: function() {
+    Session.set('roomName', this.params.room)
     var user = $.jStorage.get('user')
     var roomName = this.params.room
     if (!user) {

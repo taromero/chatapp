@@ -2,13 +2,13 @@ Notification.requestPermission()
 
 Template.chat_room.rendered = function() {
   Tracker.autorun(showMentions)
+  Meteor.call('addToRoom', Session.get('roomName'), Session.get('user')._id)
 
   function showMentions() {
     var user = Session.get('user')
     var caseInsensitiveNick = new RegExp('^' + user.nick + '$', 'i')
     var mentionsToUser = Mentions.find({ to: { $in: [caseInsensitiveNick, 'all'] }, from: { $ne: caseInsensitiveNick } })
     mentionsToUser.forEach(function(msg) {
-      console.log('msg ' , msg);
       showNotification(msg)
     })
     // remove them after they are displayed.
@@ -17,4 +17,8 @@ Template.chat_room.rendered = function() {
       Mentions.remove(msg._id)
     })
   }
+}
+
+window.onbeforeunload = function() {
+  Meteor.call('kickout', Session.get('roomName'), Session.get('user')._id)
 }
