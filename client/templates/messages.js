@@ -3,7 +3,8 @@ Template.messages.rendered = function() {
 
   function showMentions() {
     var user = Session.get('user')
-    var mentionsToUser = Mentions.find({ to: { $in: [user.nick, 'all'] }, from: { $ne: user.nick } })
+    var caseInsensitiveNick = new RegExp('^' + user.nick + '$', 'i')
+    var mentionsToUser = Mentions.find({ to: { $in: [caseInsensitiveNick, 'all'] }, from: { $ne: caseInsensitiveNick } })
     mentionsToUser.forEach(function(msg) {
       console.log('msg ' , msg);
       showNotification(msg)
