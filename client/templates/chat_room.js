@@ -2,6 +2,7 @@ Notification.requestPermission()
 
 Template.chat_room.rendered = function() {
   Tracker.autorun(showMentions)
+  Tracker.autorun(reloadOnLostConnetion)
   Meteor.call('addToRoom', Session.get('roomName'), Session.get('user')._id)
 
   function showMentions() {
@@ -29,7 +30,19 @@ Template.chat_room.rendered = function() {
         notification.close()
       }, 5000)
     }
+  }
 
+  function reloadOnLostConnetion() {
+    console.log('Meteor.status().connected ' , Meteor.status().connected);
+    var reloadTimeout;
+    if (!Meteor.status().connected) {
+      reloadTimeout = setTimeout(function() {
+        if (!Meteor.status().connected) {
+          // if connection is also lost after a while, reload
+          location.reload()
+        }
+      }, 2000)
+    }
   }
 }
 
