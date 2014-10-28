@@ -13,6 +13,16 @@ Router.route('auth', {
   }
 })
 
+Router.route('rooms', {
+  path: '/rooms',
+  template: 'rooms',
+  waitOn: function() {
+    return [
+      Meteor.subscribe('rooms')
+    ]
+  }
+})
+
 Router.route('room', {
   path: '/rooms/:room',
   template: 'chat_room',
