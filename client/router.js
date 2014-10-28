@@ -19,7 +19,8 @@ Router.route('room', {
   waitOn: function() {
     return [
       Meteor.subscribe('users'),
-      Meteor.subscribe('messages')
+      Meteor.subscribe('messages'),
+      Meteor.subscribe('mentions')
     ]
   },
   onBeforeAction: function() {

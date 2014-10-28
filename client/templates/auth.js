@@ -6,7 +6,7 @@ Template.auth.events({
   'keypress #password': function(evt) {
     if (Helpers.isEnter(evt)) {
       var defaultUser = { _id: Math.random(), passwords: {}, nick: 'default Name' }
-      var user = $.jStorage.get('user', defaultUser)
+      var user = $.jStorage.get('user') || defaultUser
       var roomName = Session.get('auth.roomName')
       var password = $('#password').val()
       Auth.toRoom(password, roomName, function(err, res) {

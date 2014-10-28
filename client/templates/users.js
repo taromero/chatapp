@@ -17,7 +17,17 @@ Template.users.helpers({
 Template.users.events({
   'keypress #nick': function(evt) {
     if (Helpers.isEnter(evt)) {
-      Users.upsert(Session.get('user')._id, { $set: { nick: $('#nick').val() } })
+      var user = Session.get('user')
+      user.nick = $('#nick').val()
+      Session.set('user', user)
+      Users.upsert(user._id, { $set: { nick: user.nick } })
     }
   }
 })
+
+Tracker.autorun(keepSessionUserPersisted)
+
+function keepSessionUserPersisted() {
+  var user = Session.get('user')
+  if (user) $.jStorage.set('user', user)
+}
