@@ -4,6 +4,7 @@
     <table class="table table-striped">
       <thead>
         <tr>
+          <th style='width:7%;'>When</th>
           <th style='width:70px;'>Image</th>
           <th>Message</th>
         </tr>
@@ -11,6 +12,9 @@
       <tbody>
         {{#each messages}}
           <tr>
+            <td>
+              {{timeago timestamp}}
+            </td>
             <td>
               <img src='{{snapshot}}' alt='{{author}}' class='snapshot {{effect}}'/>
             </td>
