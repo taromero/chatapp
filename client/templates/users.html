@@ -2,11 +2,11 @@
   <div style='display:inline-block'>
     <div style='float:left;;margin-right:10px;'>
       {{> video}}
-      <input id='nick' placeholder={{user.nick}} style='width:172px'/>
+      <input id='nick' placeholder={{user.nick}} style='width:{{picWidth}}'/>
     </div>
     {{#each otherUsers}}
       <div style='float:left;margin-right:10px;'>
-        <img src='{{snapshot}}' class='snapshot {{effect}}' id='{{_id}}'/>
+        <img src='{{snapshot}}' class='snapshot {{effect}}' id='{{_id}}' height='{{picHeight}}' width='{{picWidth}}'/>
         <div>{{nick}}</div>
       </div>
     {{/each}}

@@ -17,5 +17,18 @@ Template.status.events({
     $('video')[0].className = ''
     $('video').addClass('blur')
     Session.set('status.class', 'blur')
+  },
+
+  'click #picSmall': function() {
+    Session.set('picHeight', 47)
+    Session.set('picWidth', 58)
+  },
+  'click #picMedium': function() {
+    Session.set('picHeight', 70)
+    Session.set('picWidth', 86)
+  },
+  'click #picBig': function() {
+    Session.set('picHeight', 140)
+    Session.set('picWidth', 172)
   }
 })

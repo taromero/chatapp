@@ -1,5 +1,8 @@
 Notification.requestPermission()
 
+Session.setDefault('picWidth', 172)
+Session.setDefault('picHeight', 140)
+
 Template.chat_room.rendered = function() {
   Tracker.autorun(showMentions)
   Tracker.autorun(reloadOnLostConnetion)

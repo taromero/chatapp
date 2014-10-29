@@ -15,3 +15,12 @@ Template.video.rendered = function() {
     console.log('res: ', res)
   })
 }
+
+Template.video.helpers({
+  picHeight: function() {
+    return Session.get('picHeight') + 'px'
+  },
+  picWidth: function() {
+    return Session.get('picWidth') + 'px'
+  }
+})
