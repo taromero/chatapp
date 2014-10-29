@@ -2,6 +2,7 @@ Notification.requestPermission()
 
 Session.setDefault('picWidth', 58)
 Session.setDefault('picHeight', 47)
+Session.setDefault('camClose', true)
 
 Template.chat_room.rendered = function() {
   Tracker.autorun(showMentions)

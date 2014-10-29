@@ -5,6 +5,13 @@ Template.status.events({
   'click #brb': setFilter('blur'),
   'click #lunch': setFilter('sepia'),
 
+  'click #camClose': function() {
+    Session.set('camClose', true)
+  },
+  'click #camFar': function() {
+    Session.set('camClose', false)
+  },
+
   'click #picSmall': function() {
     Session.set('picHeight', 47)
     Session.set('picWidth', 58)
