@@ -8,7 +8,7 @@ Meteor.methods({
     }
   },
   addToRoom: function(roomName, userId) {
-    var user = Users.findOne(userId)
+    var user = Users.findOne(parseFloat(userId))
     if (!_(user.connectedTo).contains(roomName)) {
       Users.update(userId, { $push: { connectedTo: roomName } })
     }
