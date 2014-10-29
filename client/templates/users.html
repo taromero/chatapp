@@ -1,7 +1,9 @@
 <template name='users'>
   <div style='display:inline-block'>
     <div style='float:left;;margin-right:10px;'>
-      {{> video}}
+      <div>
+        <img src='{{user.snapshot}}' class='snapshot {{user.effect}}' height='{{picHeight}}' width='{{picWidth}}'/>
+      </div>
       <input id='nick' placeholder={{user.nick}} style='width:{{picWidth}}'/>
     </div>
     {{#each otherUsers}}

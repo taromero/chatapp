@@ -1,4 +1,4 @@
-Template.video.rendered = function() {
+Template.videoRecorder.rendered = function() {
   Camera.video = document.querySelector('video')
   Camera.canvas = document.querySelector('canvas')
   Camera.canvasCtx = Camera.canvas.getContext('2d')
@@ -16,7 +16,7 @@ Template.video.rendered = function() {
   })
 }
 
-Template.video.helpers({
+Template.videoRecorder.helpers({
   picHeight: function() {
     return Session.get('picHeight') + 'px'
   },
