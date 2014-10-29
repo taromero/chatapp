@@ -5,7 +5,7 @@ Session.setDefault('picHeight', 140)
 
 Template.chat_room.rendered = function() {
   Tracker.autorun(showMentions)
-  Tracker.autorun(reloadOnLostConnetion)
+  Tracker.autorun(reloadOnLostConnetion())
   Meteor.call('addToRoom', Session.get('roomName'), Session.get('user')._id)
 
   function showMentions() {
@@ -36,15 +36,20 @@ Template.chat_room.rendered = function() {
   }
 
   function reloadOnLostConnetion() {
-    console.log('Meteor.status().connected ' , Meteor.status().connected);
-    var reloadTimeout;
-    if (!Meteor.status().connected) {
-      reloadTimeout = setTimeout(function() {
+    var hasConnected = false
+    return function() {
+      hasConnected = hasConnected || Meteor.status().connected
+      if (hasConnected) {
+        // when it connects, why start watching for disconnections
         if (!Meteor.status().connected) {
-          // if connection is also lost after a while, reload
-          location.reload()
+          setTimeout(function() {
+            if (!Meteor.status().connected) {
+              // if connection is also lost after a while, reload
+              location.reload()
+            }
+          }, 3000)
         }
-      }, 10000)
+      }
     }
   }
 }
