@@ -1,7 +1,7 @@
 Notification.requestPermission()
 
-Session.setDefault('picWidth', 172)
-Session.setDefault('picHeight', 140)
+Session.setDefault('picWidth', 58)
+Session.setDefault('picHeight', 47)
 
 Template.chat_room.rendered = function() {
   Tracker.autorun(showMentions)
