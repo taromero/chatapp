@@ -29,8 +29,8 @@ Router.route('room', {
   waitOn: function() {
     return [
       Meteor.subscribe('users', this.params.room),
-      Meteor.subscribe('messages'),
-      Meteor.subscribe('mentions')
+      Meteor.subscribe('messages', this.params.room),
+      Meteor.subscribe('mentions', this.params.room)
     ]
   },
   data: function() {
@@ -46,8 +46,11 @@ Router.route('room', {
       this.render('loading')
       var that = this
       Auth.toRoom(user.passwords[roomName], roomName, function(err, res) {
-        err && this.redirect('/auth/' + roomName)
-        that.render('chat_room')
+        if (err) {
+          return that.redirect('/auth/' + roomName)
+        } else {
+          that.render('chat_room')
+        }
       })
     }
   }

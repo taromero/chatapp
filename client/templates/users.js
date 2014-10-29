@@ -15,14 +15,12 @@ Template.users.helpers({
 })
 
 Template.users.events({
-  'keypress #nick, focusout #nick': function(evt) {
+  'keypress #nick': function(evt) {
     if (Helpers.isEnter(evt)) {
-      var user = Session.get('user')
-      user.nick = $('#nick').val()
-      Session.set('user', user)
-      Users.upsert(user._id, { $set: { nick: user.nick } })
+      updateUserNick()
     }
   },
+  'focusout #nick': updateUserNick,
   'dblclick .snapshot': function(evt) {
     var kickedOutUserId = evt.currentTarget.id
     Mentions.insert({
@@ -40,4 +38,11 @@ Tracker.autorun(keepSessionUserPersisted)
 function keepSessionUserPersisted() {
   var user = Session.get('user')
   if (user) $.jStorage.set('user', user)
+}
+
+function updateUserNick() {
+  var user = Session.get('user')
+  user.nick = $('#nick').val()
+  Session.set('user', user)
+  Users.upsert(user._id, { $set: { nick: user.nick } })
 }

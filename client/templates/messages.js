@@ -9,6 +9,7 @@ Template.messages.events({
     if (Helpers.isEnter(evt)) {
       var message = {
         author: $('#nick').val() || $('#nick').attr('placeholder'),
+        room: Session.get('roomName'),
         body: $('#text_entry').val(),
         snapshot: Camera.takeSnapshot(),
         timestamp: new Date().getTime(),
@@ -30,6 +31,7 @@ function createMention(message) {
       Mentions.insert({
         from: message.author,
         to: dest,
+        room: message.room,
         body: message.body,
         snapshot: message.snapshot
       })
