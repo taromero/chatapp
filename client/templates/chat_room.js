@@ -44,7 +44,7 @@ Template.chat_room.rendered = function() {
           // if connection is also lost after a while, reload
           location.reload()
         }
-      }, 2000)
+      }, 10000)
     }
   }
 }
