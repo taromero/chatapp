@@ -63,13 +63,22 @@ Router.route('room', {
     if (!user) {
       this.redirect('/auth/' + roomName)
     } else {
-      this.render('loading')
-      var that = this
-      Auth.toRoom(user.passwords[roomName], roomName, function(err, res) {
+        var that = this
+      Auth.checkUserExistance(user._id, function(err, res) {
         if (err) {
-          return that.redirect('/auth/' + roomName)
+          console.error(err)
+          $.jStorage.deleteKey('user')
+          that.redirect('/auth/' + roomName)
+          return;
         } else {
-          that.render('chat_room')
+          that.render('loading')
+          Auth.toRoom(user.passwords[roomName], roomName, function(err, res) {
+            if (err) {
+              return that.redirect('/auth/' + roomName)
+            } else {
+              that.render('chat_room')
+            }
+          })
         }
       })
     }

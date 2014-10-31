@@ -22,5 +22,12 @@ Meteor.methods({
     } else {
       throw new Meteor.Error(401, 'Not allowed')
     }
+  },
+  checkUserExistance: function(userId) {
+    if (Users.find(parseFloat(userId)).count() > 0) {
+      return true;
+    } else {
+      throw new Meteor.Error(400, 'User don\'t exist anymore on the DB, auth again')
+    }
   }
 })
