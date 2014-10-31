@@ -16,6 +16,7 @@ Template.chat_room.rendered = function() {
     var mentionsToUser = Mentions.find({ to: { $in: [caseInsensitiveNick, 'all'] }, from: { $ne: caseInsensitiveNick } })
     mentionsToUser.forEach(function(msg) {
       showNotification(msg)
+      playSound()
     })
     // remove them after they are displayed.
     // Not user Mentions.remove({ to: user.nick }) because a mention can be created in the meanwhile
@@ -34,6 +35,11 @@ Template.chat_room.rendered = function() {
       setTimeout(function() {
         notification.close()
       }, 5000)
+    }
+
+    function playSound() {
+      var sound = new Audio('/audio/loud.ogg')
+      sound.play()
     }
   }
 
