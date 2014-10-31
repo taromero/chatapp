@@ -4,7 +4,7 @@
       <div>
         <img src='{{user.snapshot}}' class='snapshot {{user.effect}}' height='{{picHeight}}' width='{{picWidth}}'/>
       </div>
-      <input id='nick' placeholder={{user.nick}} style='width:{{picWidth}}'/>
+      <input type='text' class='form-control' id='nick' placeholder={{user.nick}} style='width:{{picWidth}}'/>
     </div>
     {{#each otherUsers}}
       <div style='float:left;margin-right:10px;'>
