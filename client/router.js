@@ -13,6 +13,11 @@ Router.route('auth', {
   }
 })
 
+Router.route('masterAuth', {
+  path: '/masterAuth',
+  template: 'masterAuth'
+})
+
 Router.route('rooms', {
   path: '/rooms',
   template: 'rooms',
@@ -20,6 +25,22 @@ Router.route('rooms', {
     return [
       Meteor.subscribe('rooms')
     ]
+  },
+  onBeforeAction: function() {
+    var user = $.jStorage.get('user')
+    if (!user) {
+      this.redirect('/')
+    } else {
+      this.render('loading')
+      var that = this
+      Auth.masterAuth(user.masterPassword, function(err, res) {
+        if (err) {
+          return that.redirect('/masterAuth')
+        } else {
+          that.render('rooms')
+        }
+      })
+    }
   }
 })
 
@@ -37,7 +58,6 @@ Router.route('room', {
     return { roomName: this.params.room }
   },
   onBeforeAction: function() {
-    Session.set('roomName', this.params.room)
     var user = $.jStorage.get('user')
     var roomName = this.params.room
     if (!user) {

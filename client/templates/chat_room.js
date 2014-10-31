@@ -5,6 +5,7 @@ Session.setDefault('picHeight', 47)
 Session.setDefault('camClose', true)
 
 Template.chat_room.rendered = function() {
+  Session.set('roomName', this.data.roomName)
   Tracker.autorun(showMentions)
   Tracker.autorun(reloadOnLostConnetion())
   Meteor.call('addToRoom', Session.get('roomName'), Session.get('user')._id)
