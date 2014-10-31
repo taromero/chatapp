@@ -7,43 +7,22 @@ Session.setDefault('camClose', true)
 Template.chat_room.rendered = function() {
   Session.set('roomName', this.data.roomName)
   Tracker.autorun(showMentions)
-  Tracker.autorun(reloadOnLostConnetion())
+  Tracker.autorun(notifyOnConnectionLost())
   Meteor.call('addToRoom', Session.get('roomName'), Session.get('user')._id)
 
   function showMentions() {
     var user = Session.get('user')
     var caseInsensitiveNick = new RegExp('^' + user.nick + '$', 'i')
     var mentionsToUser = Mentions.find({ to: { $in: [caseInsensitiveNick, 'all'] }, from: { $ne: caseInsensitiveNick } })
-    mentionsToUser.forEach(function(msg) {
-      showNotification(msg)
-      playSound()
-    })
+    mentionsToUser.forEach(Notifier.notify)
     // remove them after they are displayed.
     // Not user Mentions.remove({ to: user.nick }) because a mention can be created in the meanwhile
     mentionsToUser.forEach(function(msg) {
       Mentions.remove(msg._id)
     })
-
-    function showNotification(msg) {
-      var notification = new Notification(msg.from, {
-        body: msg.body,
-        icon: msg.snapshot
-      })
-      notification.onclick = function() {
-        notification.close()
-      }
-      setTimeout(function() {
-        notification.close()
-      }, 5000)
-    }
-
-    function playSound() {
-      var sound = new Audio('/audio/loud.ogg')
-      sound.play()
-    }
   }
 
-  function reloadOnLostConnetion() {
+  function notifyOnConnectionLost() {
     var hasConnected = false
     return function() {
       hasConnected = hasConnected || Meteor.status().connected
@@ -52,8 +31,11 @@ Template.chat_room.rendered = function() {
         if (!Meteor.status().connected) {
           setTimeout(function() {
             if (!Meteor.status().connected) {
-              // if connection is also lost after a while, reload
-              location.reload()
+              $('#connectionLostModal').modal('show')
+              Notifier.notify({
+                from: 'App',
+                body: 'It seems that you\'ve lost conection with the server'
+              })
             }
           }, 3000)
         }
