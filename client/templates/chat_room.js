@@ -13,7 +13,7 @@ Template.chat_room.rendered = function() {
   function showMentions() {
     var user = Session.get('user')
     var caseInsensitiveNick = new RegExp('^' + user.nick + '$', 'i')
-    var mentionsToUser = Mentions.find({ to: { $in: [caseInsensitiveNick, 'all'] }, from: { $ne: caseInsensitiveNick } })
+    var mentionsToUser = Mentions.find({ to: { $in: [caseInsensitiveNick, 'all'] }, from: { $not: { $regex: caseInsensitiveNick } } })
     mentionsToUser.forEach(Notifier.notify)
     // remove them after they are displayed.
     // Not user Mentions.remove({ to: user.nick }) because a mention can be created in the meanwhile
