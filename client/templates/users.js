@@ -30,6 +30,7 @@ Template.users.events({
       snapshot: Camera.takeSnapshot()
     })
     Meteor.call('kickout', currentRoom().name, evt.currentTarget.id)
+    Notifier.playSound('kickuser')
   }
 })
 

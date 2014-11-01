@@ -15,7 +15,7 @@
       <button class="btn btn-default" id='lunch'>Lunch</button>
     </div>
     <div class="btn-group">
-      <button class="btn btn-default" id='camClose'>Close (default)</button>
+      <button class="btn btn-default" id='camClose'>Close</button>
       <button class="btn btn-default" id='camFar'>Far</button>
     </div>
     <div class="btn-group">
@@ -27,6 +27,25 @@
     </div>
     <div class="btn-group">
       <button class="btn btn-default" id='toogleTitleNotification'>{{#if titleNotifications}} Disable {{else}} Enable {{/if}} title notifications</button>
+    </div>
+    <div class="btn-group">
+      <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+        Msg Sound <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a class='msg-notification-conf' id='default'>Default</a></li>
+        <li><a class='msg-notification-conf' id='water_drum'>Water Drum</a></li>
+        <li><a class='msg-notification-conf' id='sparkling_water'>Sparkling</a></li>
+      </ul>
+    </div>
+    <div class="btn-group">
+      <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+        Mention sound <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a class='mention-notification-conf' id='default'>Default</a></li>
+        <li><a class='mention-notification-conf' id='phone_ringing'>Phone ringing</a></li>
+      </ul>
     </div>
   </div>
 </template>

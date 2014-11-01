@@ -64,6 +64,13 @@ Template.status.events({
 
   'click #toogleTitleNotification': function() {
     Session.set('titleNotifications', !Session.get('titleNotifications'))
+  },
+
+  'click .msg-notification-conf': function(evt) {
+    Session.set('sounds.newMessage', evt.currentTarget.id)
+  },
+  'click .mention-notification-conf': function(evt) {
+    Session.set('sounds.mention', evt.currentTarget.id)
   }
 })
 

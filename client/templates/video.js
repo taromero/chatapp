@@ -1,3 +1,5 @@
+Session.set('acceptedCamera', false)
+
 Template.videoRecorder.rendered = function() {
   notifyIfCameraNotAccepted()
   Session.set('imageType', currentRoom().imageType)
@@ -42,7 +44,7 @@ function notifyIfCameraNotAccepted() {
         } else {
           clearInterval(interval)
         }
-      }, 5000)
+      }, 10*1000)
       Notifier.showNotification({
         author: 'App',
         body: 'You have not accepted the camera yet!'
