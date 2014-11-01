@@ -1,9 +1,4 @@
 Meteor.startup(function() {
-  Rooms.upsert({ name: 'defaultRoom' } , {
-    name: 'defaultRoom',
-    password: '1234'
-  })
-
   setInterval(keepMessagesForEachRoomUnder(40), 2*1000)
 
   //TODO: find a more performant way of doing this. Notes:
