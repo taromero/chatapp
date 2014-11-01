@@ -14,7 +14,10 @@ Template.chat_room.rendered = function() {
   function handleNotifications() {
     Messages.find({ timestamp: { $gt: TimeHelper.serverTimestamp() } }).observe({
       added: function(doc) {
-        switch (Notifier.level) {
+        if (Session.get('titleNotifications') && (User.nick != doc.author)) {
+          document.title = doc.body
+        }
+        switch (Session.get('notificationsLevel')) {
           case 1:
             return null
           case 2:

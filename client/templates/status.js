@@ -1,5 +1,9 @@
 Template.status.rendered = function() {
+  var confVarNames = ['camClose', 'titleNotifications', 'status.class', 'notificationsLevel']
+  restoreConfFromLocalStorage()
+  Session.setDefault('titleNotifications', false)
   Tracker.autorun(notifyOnConnectionLost())
+  Tracker.autorun(trackConfToPersist)
 
   function notifyOnConnectionLost() {
     var hasConnected = false
@@ -25,6 +29,19 @@ Template.status.rendered = function() {
       }
     }
   }
+
+  function restoreConfFromLocalStorage() {
+    confVarNames.forEach(function(varName) {
+      Session.set(varName, $.jStorage.get(varName))
+    })
+  }
+
+  function trackConfToPersist() {
+    confVarNames.forEach(function(varName) {
+      var value = Session.get(varName)
+      $.jStorage.set(varName, value)
+    })
+  }
 }
 
 Template.status.events({
@@ -41,34 +58,26 @@ Template.status.events({
     Session.set('camClose', false)
   },
 
-  'click #picSmall': function() {
-    Session.set('picHeight', 47)
-    Session.set('picWidth', 58)
-  },
-  'click #picMedium': function() {
-    Session.set('picHeight', 70)
-    Session.set('picWidth', 86)
-  },
-  'click #picBig': function() {
-    Session.set('picHeight', 140)
-    Session.set('picWidth', 172)
+  'click .notify-conf': function(evt) {
+    Session.set('notificationsLevel', parseInt(evt.currentTarget.dataset.level))
   },
 
-  'click .notify-conf': function(evt) {
-    Notifier.level = parseInt(evt.currentTarget.dataset.level)
+  'click #toogleTitleNotification': function() {
+    Session.set('titleNotifications', !Session.get('titleNotifications'))
   }
 })
 
 Template.status.helpers({
   connected: function() {
     return Meteor.status().connected
+  },
+  titleNotifications: function() {
+    return Session.get('titleNotifications')
   }
 })
 
 function setFilter(name) {
   return function() {
-    $('video')[0].className = ''
-    $('video').addClass(name)
     Session.set('status.class', name)
   }
 }
