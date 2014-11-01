@@ -17,7 +17,7 @@ Template.chat_room.rendered = function() {
         if (Session.get('titleNotifications') && (User.nick != doc.author)) {
           document.title = doc.body
         }
-        switch (Notifier.level) {
+        switch (Session.get('notificationsLevel')) {
           case 1:
             return null
           case 2:
