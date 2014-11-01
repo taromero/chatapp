@@ -47,11 +47,12 @@ Template.chat_room.rendered = function() {
 
   function notifyOnConnectionLost() {
     var hasConnected = false
+    var notified = false
     return function() {
       hasConnected = hasConnected || Meteor.status().connected
       if (hasConnected) {
         // when it connects, why start watching for disconnections
-        if (!Meteor.status().connected) {
+        if (!Meteor.status().connected && !notified) {
           setTimeout(function() {
             if (!Meteor.status().connected) {
               $('#connectionLostModal').modal('show')
@@ -60,7 +61,8 @@ Template.chat_room.rendered = function() {
                 body: 'It seems that you\'ve lost conection with the server'
               })
             }
-          }, 3000)
+          }, 5000)
+          notified = true
         }
       }
     }
