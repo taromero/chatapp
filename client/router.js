@@ -81,8 +81,19 @@ Router.route('room', {
   }
 })
 
+Router.route('selectRoom', {
+  path: '/selectRoom',
+  template: 'select_room',
+  waitOn: function() {
+    return Meteor.subscribe('rooms')
+  },
+  action: function() {
+    this.ready() ? this.render() : this.render('loading')
+  }
+})
+
 Router.route('/', {
   onBeforeAction: function() {
-    this.redirect('/rooms/defaultRoom')
+    this.redirect('/selectRoom')
   }
 })

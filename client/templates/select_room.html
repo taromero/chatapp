@@ -1,0 +1,24 @@
+<template name='select_room'>
+  <div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each rooms}}
+          <tr>
+            <td>
+              {{name}}
+            </td>
+            <td>
+              <button class='btn btn-alert enterRoom' id='{{name}}'>Enter</button>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</template>
