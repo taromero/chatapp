@@ -35,14 +35,14 @@ function notifyIfCameraNotAccepted() {
   var interval = null
   setTimeout(function() {
     if (!Session.get('acceptedCamera')) {
+      Notifier.playSound('noCamera')
       interval = setInterval(function() {
         if (!Session.get('acceptedCamera')) {
-          var sound = new Audio('/audio/camera_not_accepted.ogg')
-          sound.play()
+          Notifier.playSound('noCamera')
         } else {
           clearInterval(interval)
         }
-      }, 1000)
+      }, 5000)
       Notifier.showNotification({
         author: 'App',
         body: 'You have not accepted the camera yet!'
