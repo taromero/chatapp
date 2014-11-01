@@ -1,3 +1,32 @@
+Template.status.rendered = function() {
+  Tracker.autorun(notifyOnConnectionLost())
+
+  function notifyOnConnectionLost() {
+    var hasConnected = false
+    var notificationTimeout = null
+    var lastConnectedState = null
+    return function() {
+      var isConnected = Meteor.status().connected
+      hasConnected = hasConnected || isConnected
+      if (hasConnected) {
+        // when it connects, why start watching for disconnections
+        if (!isConnected && (lastConnectedState != isConnected)) {
+          clearTimeout(notificationTimeout)
+          notificationTimeout = setTimeout(function() {
+            if (!isConnected) {
+              Notifier.notify({
+                author: 'App',
+                body: 'It seems that you\'ve lost conection with the server'
+              })
+            }
+          }, 1000)
+        }
+        lastConnectedState = isConnected
+      }
+    }
+  }
+}
+
 Template.status.events({
   'click #normal': setFilter(''),
   'click #call': setFilter('grayscale'),
@@ -27,6 +56,12 @@ Template.status.events({
 
   'click .notify-conf': function(evt) {
     Notifier.level = parseInt(evt.currentTarget.dataset.level)
+  }
+})
+
+Template.status.helpers({
+  connected: function() {
+    return Meteor.status().connected
   }
 })
 

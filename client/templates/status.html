@@ -1,5 +1,12 @@
 <template name='status'>
   <div>
+    <div style='float:left'>
+    {{#if connected}}
+      <span class="label label-success">Connection: Ok</span>
+    {{else}}
+    <span class="label label-danger">Disconnected</span>
+    {{/if}}
+    </div>
     <div class="btn-group">
       <button class="btn btn-default" id='normal'>Normal</button>
       <button class="btn btn-default" id='call'>Call</button>
