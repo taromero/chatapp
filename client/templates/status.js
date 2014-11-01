@@ -5,6 +5,7 @@ Template.status.rendered = function() {
   Tracker.autorun(notifyOnConnectionLost())
   Tracker.autorun(trackConfToPersist)
 
+
   function notifyOnConnectionLost() {
     var hasConnected = false
     var notificationTimeout = null
@@ -80,6 +81,12 @@ Template.status.helpers({
   },
   titleNotifications: function() {
     return Session.get('titleNotifications')
+  },
+  messageSoundName: function() {
+    return Session.get('sounds.newMessage')
+  },
+  mentionSoundName: function() {
+    return Session.get('sounds.mention')
   }
 })
 

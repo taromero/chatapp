@@ -1,4 +1,4 @@
-Session.setDefault('sounds.mention', 'notification')
+Session.setDefault('sounds.mention', 'default')
 Session.setDefault('sounds.newMessage', 'sparkling_water')
 Session.setDefault('sounds.noCamera', 'horse')
 Session.setDefault('sounds.kickuser', 'magnum_shot')
@@ -18,7 +18,7 @@ Notifier = {
     }
     setTimeout(function() {
       notification.close()
-    }, 5000)
+    }, 4000)
   },
   playSound: function(soundType) {
     var sound = new Audio('/audio/' + (Session.get('sounds.' + soundType) || 'default') + '.ogg')
