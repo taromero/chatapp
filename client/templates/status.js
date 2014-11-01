@@ -3,23 +3,25 @@ Template.status.rendered = function() {
 
   function notifyOnConnectionLost() {
     var hasConnected = false
-    var notified = false
+    var notificationTimeout = null
+    var lastConnectedState = null
     return function() {
-      hasConnected = hasConnected || Meteor.status().connected
+      var isConnected = Meteor.status().connected
+      hasConnected = hasConnected || isConnected
       if (hasConnected) {
         // when it connects, why start watching for disconnections
-        if (!Meteor.status().connected && !notified) {
-          setTimeout(function() {
-            if (!Meteor.status().connected) {
-              $('#connectionLostModal').modal('show')
+        if (!isConnected && (lastConnectedState != isConnected)) {
+          clearTimeout(notificationTimeout)
+          notificationTimeout = setTimeout(function() {
+            if (!isConnected) {
               Notifier.notify({
                 author: 'App',
                 body: 'It seems that you\'ve lost conection with the server'
               })
             }
-          }, 5000)
-          notified = true
+          }, 1000)
         }
+        lastConnectedState = isConnected
       }
     }
   }
