@@ -20,3 +20,7 @@ Handlebars.registerHelper('firstTenDigits', function(timestamp) {
   // livestamp only works with 10 digit timestamps for some reason.
   return Math.floor(timestamp/1000)
 })
+
+currentRoom = function() {
+  return Rooms.findOne()
+}

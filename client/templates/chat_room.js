@@ -7,9 +7,8 @@ Session.setDefault('camClose', true)
 
 Template.chat_room.rendered = function() {
   handleNotifications()
-  Session.set('roomName', this.data.roomName)
   Tracker.autorun(showMentions)
-  Meteor.call('addToRoom', Session.get('roomName'), User._id)
+  Meteor.call('addToRoom', currentRoom().name, User._id)
 
   function handleNotifications() {
     Messages.find({ timestamp: { $gt: TimeHelper.serverTimestamp() } }).observe({
@@ -52,5 +51,5 @@ Template.chat_room.rendered = function() {
 }
 
 window.onbeforeunload = function() {
-  Meteor.call('kickout', Session.get('roomName'), User._id)
+  Meteor.call('kickout', currentRoom().name, User._id)
 }

@@ -15,7 +15,7 @@ Camera = {
       } else {
         Camera.canvasCtx.drawImage(Camera.video, 0, 0, 58, 47)
       }
-      return Camera.canvas.toDataURL('image/png')
+      return Camera.canvas.toDataURL('image/' + Session.get('imageType'))
     }
   }
 }
