@@ -12,12 +12,12 @@ Template.messages.events({
         room: Session.get('roomName'),
         body: $('#text_entry').val(),
         snapshot: Camera.takeSnapshot(),
-        timestamp: new Date().getTime(),
+        timestamp: TimeHelper.serverTimestamp(),
         effect: Session.get('status.class')
       }
       createMention(message)
       Messages.insert(message)
-      User.lastMsgTimestamp = Date.now()
+      User.lastMsgTimestamp = TimeHelper.serverTimestamp()
       $('#text_entry').val('')
     }
   }

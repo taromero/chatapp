@@ -6,29 +6,33 @@ Session.setDefault('picHeight', 47)
 Session.setDefault('camClose', true)
 
 Template.chat_room.rendered = function() {
-  Messages.find({ timestamp: { $gt: Date.now() } }).observe({
-    added: function(doc) {
-      switch (Notifier.level) {
-        case 1:
-          return null
-        case 2:
-          return (Date.now() - User.lastMsgTimestamp < 10000) ? Notifier.playSound() : null
-        case 3:
-          return (Date.now() - User.lastMsgTimestamp < 10000) ? Notifier.notify(doc) : null
-        case 4:
-          return Notifier.playSound()
-        case 5:
-          return Notifier.notify(doc)
-        default:
-          //do nothing
-          return null
-      }
-    }
-  })
+  handleNotifications()
   Session.set('roomName', this.data.roomName)
   Tracker.autorun(showMentions)
   Tracker.autorun(notifyOnConnectionLost())
   Meteor.call('addToRoom', Session.get('roomName'), User._id)
+
+  function handleNotifications() {
+    Messages.find({ timestamp: { $gt: TimeHelper.serverTimestamp() } }).observe({
+      added: function(doc) {
+        switch (Notifier.level) {
+          case 1:
+            return null
+          case 2:
+            return (TimeHelper.serverTimestamp() - User.lastMsgTimestamp < 10000) ? Notifier.playSound() : null
+          case 3:
+            return (TimeHelper.serverTimestamp() - User.lastMsgTimestamp < 10000) ? Notifier.notify(doc) : null
+          case 4:
+            return Notifier.playSound()
+          case 5:
+            return Notifier.notify(doc)
+          default:
+            //do nothing
+            return null
+        }
+      }
+    })
+  }
 
   function showMentions() {
     var caseInsensitiveNick = new RegExp('^' + User.nick + '$', 'i')
