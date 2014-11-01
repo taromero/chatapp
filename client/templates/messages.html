@@ -19,7 +19,7 @@
               <img src='{{snapshot}}' title='{{author}}' class='snapshot {{effect}}' height='{{picHeight}}' width='{{picWidth}}'/>
             </td>
             <td>
-              {{body}}
+              {{#markdown}} {{body}} {{/markdown}}
             </td>
           </tr>
         {{/each}}
