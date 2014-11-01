@@ -1,16 +1,16 @@
 Template.users.rendered = function() {
   Meteor.setInterval(function() {
     var snapshot = Camera.takeSnapshot()
-    Users.update(Session.get('user')._id, { $set: { snapshot: snapshot, effect: Session.get('status.class') } })
+    Users.update(User._id, { $set: { snapshot: snapshot, effect: Session.get('status.class') } })
   }, 1000)
 }
 
 Template.users.helpers({
   otherUsers: function() {
-    return Users.find({ _id: { $ne: Session.get('user')._id } })
+    return Users.find({ _id: { $ne: User._id } })
   },
   user: function() {
-    return Users.findOne(Session.get('user')._id)
+    return Users.findOne(User._id)
   }
 })
 
@@ -24,7 +24,7 @@ Template.users.events({
   'dblclick .snapshot': function(evt) {
     var kickedOutUserId = evt.currentTarget.id
     Mentions.insert({
-      from: Session.get('user').nick,
+      author: User.nick,
       to: 'all',
       body: 'I removed ' + Users.findOne(parseFloat(kickedOutUserId)).nick + ' from the room',
       snapshot: Camera.takeSnapshot()
@@ -33,16 +33,8 @@ Template.users.events({
   }
 })
 
-Tracker.autorun(keepSessionUserPersisted)
-
-function keepSessionUserPersisted() {
-  var user = Session.get('user')
-  if (user) $.jStorage.set('user', user)
-}
-
 function updateUserNick() {
-  var user = Session.get('user')
-  user.nick = $('#nick').val()
-  Session.set('user', user)
-  Users.upsert(user._id, { $set: { nick: user.nick } })
+  User.nick = $('#nick').val()
+  $.jStorage.set('user', User)
+  Users.upsert(User._id, { $set: { nick: User.nick } })
 }

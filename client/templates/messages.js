@@ -12,11 +12,12 @@ Template.messages.events({
         room: Session.get('roomName'),
         body: $('#text_entry').val(),
         snapshot: Camera.takeSnapshot(),
-        timestamp: new Date().getTime(),
+        timestamp: TimeHelper.serverTimestamp(),
         effect: Session.get('status.class')
       }
       createMention(message)
       Messages.insert(message)
+      User.lastMsgTimestamp = TimeHelper.serverTimestamp()
       $('#text_entry').val('')
     }
   }
@@ -29,7 +30,7 @@ function createMention(message) {
     matches.map(function(match) {
       var dest = match.replace('@', '')
       Mentions.insert({
-        from: message.author,
+        author: message.author,
         to: dest,
         room: message.room,
         body: message.body,

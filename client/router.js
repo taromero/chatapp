@@ -1,8 +1,7 @@
 Router.configure({
   layoutTemplate: 'layout',
   onBeforeAction: function() {
-    Session.set('user', $.jStorage.get('user'))
-    this.ready() ? this.render() : this.render('loading')
+    User = $.jStorage.get('user')
   }
 })
 
@@ -57,27 +56,24 @@ Router.route('room', {
   data: function() {
     return { roomName: this.params.room }
   },
+  action: function() {
+    this.ready() ? this.render() : this.render('loading')
+  },
   onBeforeAction: function() {
     var user = $.jStorage.get('user')
     var roomName = this.params.room
     if (!user) {
       this.redirect('/auth/' + roomName)
     } else {
-        var that = this
+      var that = this
       Auth.checkUserExistance(user._id, function(err, res) {
         if (err) {
           console.error(err)
           $.jStorage.deleteKey('user')
           that.redirect('/auth/' + roomName)
-          return;
         } else {
-          that.render('loading')
-          Auth.toRoom(user.passwords[roomName], roomName, function(err, res) {
-            if (err) {
-              return that.redirect('/auth/' + roomName)
-            } else {
-              that.render('chat_room')
-            }
+          Auth.toRoom(user.passwords[roomName], roomName, function(err) {
+            err && that.redirect('/auth/' + roomName)
           })
         }
       })

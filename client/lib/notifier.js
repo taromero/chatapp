@@ -4,7 +4,7 @@ Notifier = {
     Notifier.playSound()
   },
   showNotification: function(msg) {
-    var notification = new Notification(msg.from, {
+    var notification = new Notification(msg.author, {
       body: msg.body,
       icon: msg.snapshot
     })
