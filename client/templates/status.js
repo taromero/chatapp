@@ -46,12 +46,6 @@ Template.status.rendered = function() {
 }
 
 Template.status.events({
-  'click #normal': setFilter(''),
-  'click #call': setFilter('grayscale'),
-  'click #dark': setFilter('invert'),
-  'click #brb': setFilter('blur'),
-  'click #lunch': setFilter('sepia'),
-
   'click #camClose': function() {
     Session.set('camClose', true)
   },
@@ -89,9 +83,3 @@ Template.status.helpers({
     return Session.get('sounds.mention')
   }
 })
-
-function setFilter(name) {
-  return function() {
-    Session.set('status.class', name)
-  }
-}

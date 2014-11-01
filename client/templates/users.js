@@ -23,14 +23,22 @@ Template.users.events({
   'focusout #nick': updateUserNick,
   'dblclick .snapshot': function(evt) {
     var kickedOutUserId = evt.currentTarget.id
-    Mentions.insert({
-      author: User.nick,
-      to: 'all',
-      body: 'I removed ' + Users.findOne(parseFloat(kickedOutUserId)).nick + ' from the room',
-      snapshot: Camera.takeSnapshot()
-    })
-    Meteor.call('kickout', currentRoom().name, evt.currentTarget.id)
-    Notifier.playSound('kickuser')
+    if (parseFloat(kickedOutUserId)) { // prevent auto kickouts
+      console.log(2)
+      Mentions.insert({
+        author: User.nick,
+        to: 'all',
+        body: 'I removed ' + Users.findOne(parseFloat(kickedOutUserId)).nick + ' from the room',
+        snapshot: Camera.takeSnapshot()
+      })
+      Meteor.call('kickout', currentRoom().name, evt.currentTarget.id)
+      Notifier.playSound('kickuser')
+    }
+  },
+  'click #user-snapshot': function() {
+    var currentFilter = Session.get('status.class')
+    var toggleFilter = (!currentFilter ? 'blur' : '')
+    Session.set('status.class', toggleFilter)
   }
 })
 
