@@ -1,5 +1,5 @@
 Template.status.rendered = function() {
-  var confVarNames = ['camClose', 'titleNotifications', 'notificationsLevel', 'sounds.newMessage', 'sounds.mention']
+  var confVarNames = ['titleNotifications', 'notificationsLevel', 'sounds.newMessage', 'sounds.mention']
   restoreConfFromLocalStorage()
   Session.setDefault('titleNotifications', false)
   Tracker.autorun(notifyOnConnectionLost())
@@ -46,13 +46,6 @@ Template.status.rendered = function() {
 }
 
 Template.status.events({
-  'click #camClose': function() {
-    Session.set('camClose', true)
-  },
-  'click #camFar': function() {
-    Session.set('camClose', false)
-  },
-
   'click .notify-conf': function(evt) {
     Session.set('notificationsLevel', parseInt(evt.currentTarget.dataset.level))
   },

@@ -3,7 +3,7 @@ Notification.requestPermission()
 
 Session.setDefault('picWidth', 58)
 Session.setDefault('picHeight', 47)
-Session.setDefault('camClose', true)
+Session.setDefault('camera.distanceFromEdge', 0)
 
 Template.chat_room.rendered = function() {
   handleNotifications()
