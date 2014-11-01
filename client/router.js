@@ -50,11 +50,9 @@ Router.route('room', {
     return [
       Meteor.subscribe('users', this.params.room),
       Meteor.subscribe('messages', this.params.room),
-      Meteor.subscribe('mentions', this.params.room)
+      Meteor.subscribe('mentions', this.params.room),
+      Meteor.subscribe('room', this.params.room)
     ]
-  },
-  data: function() {
-    return { roomName: this.params.room }
   },
   action: function() {
     this.ready() ? this.render() : this.render('loading')

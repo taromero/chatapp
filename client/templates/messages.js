@@ -9,7 +9,7 @@ Template.messages.events({
     if (Helpers.isEnter(evt)) {
       var message = {
         author: $('#nick').val() || $('#nick').attr('placeholder'),
-        room: Session.get('roomName'),
+        room: currentRoom().name,
         body: $('#text_entry').val(),
         snapshot: Camera.takeSnapshot(),
         timestamp: TimeHelper.serverTimestamp(),

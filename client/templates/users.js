@@ -29,7 +29,7 @@ Template.users.events({
       body: 'I removed ' + Users.findOne(parseFloat(kickedOutUserId)).nick + ' from the room',
       snapshot: Camera.takeSnapshot()
     })
-    Meteor.call('kickout', Session.get('roomName'), evt.currentTarget.id)
+    Meteor.call('kickout', currentRoom().name, evt.currentTarget.id)
   }
 })
 

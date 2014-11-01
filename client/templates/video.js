@@ -1,4 +1,6 @@
 Template.videoRecorder.rendered = function() {
+  Session.set('imageType', currentRoom().imageType)
+  Session.setDefault('imageType', 'jpeg')
   Camera.video = document.querySelector('video')
   Camera.canvas = document.querySelector('canvas')
   Camera.canvasCtx = Camera.canvas.getContext('2d')

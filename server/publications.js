@@ -13,3 +13,7 @@ Meteor.publish('mentions', function(roomName) {
 Meteor.publish('rooms', function() {
   return Rooms.find()
 })
+
+Meteor.publish('room', function(roomName) {
+  return Rooms.find({ name: roomName })
+})

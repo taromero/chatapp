@@ -4,6 +4,7 @@
       <thead>
         <tr>
           <th>Name</th>
+          <th>Image Type</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -14,6 +15,10 @@
               {{name}}
             </td>
             <td>
+              {{imageType}}
+            </td>
+            <td>
+              <button class='btn btn-alert edit' id='{{_id}}'>Edit</button>
               <button class='btn btn-alert delete' id='{{_id}}'>Delete</button>
             </td>
           </tr>
@@ -31,12 +36,13 @@
           <h4 class="modal-title">Modal title</h4>
         </div>
         <div class="modal-body">
-          <input id='name' placeholder="Room's name"/>
-          <input id='password' placeholder="Room's password" type='password'/>
+          <input id='name' placeholder="Room's name" value="{{roomToEdit.name}}" class='form-control'/>
+          <input id='password' placeholder="Room's password" type='password' value="{{roomToEdit.password}}" class='form-control'/>
+          <input id='imageType' placeholder="Image Type [jpeg, png] for snapshots" value="{{roomToEdit.imageType}}" class='form-control'/>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id='create'>Save changes</button>
+          <button type="button" class="btn btn-primary" id='upsert'>Save changes</button>
         </div>
       </div>
     </div>
