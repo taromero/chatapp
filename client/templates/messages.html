@@ -13,7 +13,7 @@
         {{#each messages}}
           <tr>
             <td>
-              {{timeago timestamp}}
+              <span data-livestamp="{{firstTenDigits timestamp}}"></span>
             </td>
             <td>
               <img src='{{snapshot}}' title='{{author}}' class='snapshot {{effect}}' height='{{picHeight}}' width='{{picWidth}}'/>
