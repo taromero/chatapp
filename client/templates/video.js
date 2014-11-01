@@ -1,4 +1,5 @@
 Template.videoRecorder.rendered = function() {
+  notifyIfCameraNotAccepted()
   Session.set('imageType', currentRoom().imageType)
   Session.setDefault('imageType', 'jpeg')
   Camera.video = document.querySelector('video')
@@ -10,6 +11,7 @@ Template.videoRecorder.rendered = function() {
   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
   // Not showing vendor prefixes or code that works cross-browser.
   navigator.getUserMedia({video: true}, function(stream) {
+    Session.set('acceptedCamera', true)
     Camera.video.src = window.URL.createObjectURL(stream)
     Camera.localMediaStream = stream
   }, function (err, res) {
@@ -26,3 +28,25 @@ Template.videoRecorder.helpers({
     return Session.get('picWidth') + 'px'
   }
 })
+
+function notifyIfCameraNotAccepted() {
+  // If camera hasn't been accepted after a while, show 1 notification and start playing
+  // a sound on a regular interval to alert the user
+  var interval = null
+  setTimeout(function() {
+    if (!Session.get('acceptedCamera')) {
+      interval = setInterval(function() {
+        if (!Session.get('acceptedCamera')) {
+          var sound = new Audio('/audio/camera_not_accepted.ogg')
+          sound.play()
+        } else {
+          clearInterval(interval)
+        }
+      }, 1000)
+      Notifier.showNotification({
+        author: 'App',
+        body: 'You have not accepted the camera yet!'
+      })
+    }
+  }, 5000)
+}

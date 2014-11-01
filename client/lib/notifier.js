@@ -16,7 +16,7 @@ Notifier = {
     }, 5000)
   },
   playSound: function() {
-    var sound = new Audio('/audio/loud.ogg')
+    var sound = new Audio('/audio/notification.ogg')
     sound.play()
   }
 }
