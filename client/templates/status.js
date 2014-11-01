@@ -1,4 +1,5 @@
 Template.status.rendered = function() {
+  Session.setDefault('titleNotifications', false)
   Tracker.autorun(notifyOnConnectionLost())
 
   function notifyOnConnectionLost() {
@@ -56,12 +57,19 @@ Template.status.events({
 
   'click .notify-conf': function(evt) {
     Notifier.level = parseInt(evt.currentTarget.dataset.level)
+  },
+
+  'click #toogleTitleNotification': function() {
+    Session.set('titleNotifications', !Session.get('titleNotifications'))
   }
 })
 
 Template.status.helpers({
   connected: function() {
     return Meteor.status().connected
+  },
+  titleNotifications: function() {
+    return Session.get('titleNotifications')
   }
 })
 
