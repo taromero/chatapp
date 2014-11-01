@@ -23,6 +23,10 @@ Template.status.events({
   'click #picBig': function() {
     Session.set('picHeight', 140)
     Session.set('picWidth', 172)
+  },
+
+  'click .notify-conf': function(evt) {
+    Notifier.level = parseInt(evt.currentTarget.dataset.level)
   }
 })
 

@@ -1,19 +1,38 @@
 Notification.requestPermission()
 
+
 Session.setDefault('picWidth', 58)
 Session.setDefault('picHeight', 47)
 Session.setDefault('camClose', true)
 
 Template.chat_room.rendered = function() {
+  Messages.find({ timestamp: { $gt: Date.now() } }).observe({
+    added: function(doc) {
+      switch (Notifier.level) {
+        case 1:
+          return null
+        case 2:
+          return (Date.now() - User.lastMsgTimestamp < 10000) ? Notifier.playSound() : null
+        case 3:
+          return (Date.now() - User.lastMsgTimestamp < 10000) ? Notifier.notify(doc) : null
+        case 4:
+          return Notifier.playSound()
+        case 5:
+          return Notifier.notify(doc)
+        default:
+          //do nothing
+          return null
+      }
+    }
+  })
   Session.set('roomName', this.data.roomName)
   Tracker.autorun(showMentions)
   Tracker.autorun(notifyOnConnectionLost())
-  Meteor.call('addToRoom', Session.get('roomName'), Session.get('user')._id)
+  Meteor.call('addToRoom', Session.get('roomName'), User._id)
 
   function showMentions() {
-    var user = Session.get('user')
-    var caseInsensitiveNick = new RegExp('^' + user.nick + '$', 'i')
-    var mentionsToUser = Mentions.find({ to: { $in: [caseInsensitiveNick, 'all'] }, from: { $not: { $regex: caseInsensitiveNick } } })
+    var caseInsensitiveNick = new RegExp('^' + User.nick + '$', 'i')
+    var mentionsToUser = Mentions.find({ to: { $in: [caseInsensitiveNick, 'all'] }, author: { $not: { $regex: caseInsensitiveNick } } })
     mentionsToUser.forEach(Notifier.notify)
     // remove them after they are displayed.
     // Not user Mentions.remove({ to: user.nick }) because a mention can be created in the meanwhile
@@ -33,7 +52,7 @@ Template.chat_room.rendered = function() {
             if (!Meteor.status().connected) {
               $('#connectionLostModal').modal('show')
               Notifier.notify({
-                from: 'App',
+                author: 'App',
                 body: 'It seems that you\'ve lost conection with the server'
               })
             }
@@ -45,5 +64,5 @@ Template.chat_room.rendered = function() {
 }
 
 window.onbeforeunload = function() {
-  Meteor.call('kickout', Session.get('roomName'), Session.get('user')._id)
+  Meteor.call('kickout', Session.get('roomName'), User._id)
 }

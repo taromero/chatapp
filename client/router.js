@@ -1,7 +1,7 @@
 Router.configure({
   layoutTemplate: 'layout',
   onBeforeAction: function() {
-    Session.set('user', $.jStorage.get('user'))
+    User = $.jStorage.get('user')
   }
 })
 

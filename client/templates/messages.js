@@ -17,6 +17,7 @@ Template.messages.events({
       }
       createMention(message)
       Messages.insert(message)
+      User.lastMsgTimestamp = Date.now()
       $('#text_entry').val('')
     }
   }
@@ -29,7 +30,7 @@ function createMention(message) {
     matches.map(function(match) {
       var dest = match.replace('@', '')
       Mentions.insert({
-        from: message.author,
+        author: message.author,
         to: dest,
         room: message.room,
         body: message.body,
