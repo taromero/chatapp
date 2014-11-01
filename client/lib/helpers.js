@@ -15,3 +15,8 @@ Handlebars.registerHelper('picHeight', function(time) {
 Handlebars.registerHelper('picWidth', function(time) {
   return Session.get('picWidth') + 'px'
 })
+
+Handlebars.registerHelper('firstTenDigits', function(timestamp) {
+  // livestamp only works with 10 digit timestamps for some reason.
+  return Math.floor(timestamp/1000)
+})

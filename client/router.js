@@ -2,6 +2,7 @@ Router.configure({
   layoutTemplate: 'layout',
   onBeforeAction: function() {
     Session.set('user', $.jStorage.get('user'))
+    this.ready() ? this.render() : this.render('loading')
   }
 })
 
@@ -31,7 +32,6 @@ Router.route('rooms', {
     if (!user) {
       this.redirect('/')
     } else {
-      this.render('loading')
       var that = this
       Auth.masterAuth(user.masterPassword, function(err, res) {
         if (err) {
