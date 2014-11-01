@@ -1,5 +1,5 @@
 Template.status.rendered = function() {
-  var confVarNames = ['camClose', 'titleNotifications', 'status.class', 'notificationsLevel']
+  var confVarNames = ['camClose', 'titleNotifications', 'notificationsLevel', 'sounds.newMessage', 'sounds.mention']
   restoreConfFromLocalStorage()
   Session.setDefault('titleNotifications', false)
   Tracker.autorun(notifyOnConnectionLost())
