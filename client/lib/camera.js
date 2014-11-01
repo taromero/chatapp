@@ -1,3 +1,5 @@
+Session.set('picToCanvasRatio', 2.6) // empirically obtained :). TODO: understand this number
+
 // this obj is initialized on 'video' template
 Camera = {
   localMediaStream: null,
@@ -13,21 +15,43 @@ Camera = {
       var picW = Session.get('picWidth')
       var picH = Session.get('picHeight')
       var xToYScale = picW/picH
-      var sx = picW * 2.6
-      console.log('sx', sx)
+      var sx = picW * Session.get('picToCanvasRatio')
       var sy = sx / xToYScale
       var sWidth = sx * 2
       var sHeight = sy * 2
       var dx = Session.get('camera.distanceFromEdge')
       var dy = dx / xToYScale
+
       Camera.canvasCtx.drawImage(Camera.video,
         /* focus on the center of the image*/
         sx - dx, sy - dy, sWidth + dx*2, sHeight + dy*2, 0, 0,
-        // 0, 0, 580, 470, 0, 0,
-        // 0,0,
         /* give image size */
         picW, picH);
       return Camera.canvas.toDataURL('image/' + Session.get('imageType'))
+    }
+  },
+  UI: {
+    chromeZoom: function(evt) {
+      evt.preventDefault();
+      Camera.UI.zoom(evt.originalEvent.wheelDeltaY < 0 ? 'down' : 'up')
+    },
+    firefoxZoom: function(evt) {
+      evt.preventDefault();
+      var delta = parseInt(evt.originalEvent.wheelDelta || -evt.originalEvent.detail);
+      Camera.UI.zoom(delta < 0 ? 'down' : 'up')
+    },
+    zoom: function(direction) {
+      var zoomFactor = 5
+      var distance = Session.get('camera.distanceFromEdge')
+      if (direction == 'up') { // scroll down
+        if ((distance - zoomFactor) >= 0) {
+          Session.set('camera.distanceFromEdge', distance - zoomFactor)
+        }
+      } else {
+        if ((distance + zoomFactor) <= (Session.get('picWidth') * 2.6)) {
+          Session.set('camera.distanceFromEdge', distance + zoomFactor)
+        }
+      }
     }
   }
 }

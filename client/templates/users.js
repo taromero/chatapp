@@ -40,19 +40,8 @@ Template.users.events({
     var toggleFilter = (!currentFilter ? 'blur' : '')
     Session.set('status.class', toggleFilter)
   },
-  'mousewheel #user-snapshot': function(evt) {
-    evt.preventDefault();
-    var distance = Session.get('camera.distanceFromEdge')
-    if (evt.originalEvent.wheelDeltaY < 0) { // scroll down
-      if ((distance + 10) <= (Session.get('picWidth') * 2.6)) {
-        Session.set('camera.distanceFromEdge', distance + 10)
-      }
-    } else {
-      if ((distance - 10) >= 0) {
-        Session.set('camera.distanceFromEdge', distance - 5)
-      }
-    }
-  }
+  'mousewheel #user-snapshot': Camera.UI.chromeZoom,
+  'MozMousePixelScroll #user-snapshot': Camera.UI.firefoxZoom
 })
 
 function updateUserNick() {
