@@ -3,7 +3,7 @@ Notification.requestPermission()
 
 Session.setDefault('picWidth', 58)
 Session.setDefault('picHeight', 47)
-Session.setDefault('camClose', true)
+Session.setDefault('camera.distanceFromEdge', 0)
 
 Template.chat_room.rendered = function() {
   handleNotifications()
@@ -23,11 +23,11 @@ Template.chat_room.rendered = function() {
           case 1:
             return null
           case 2:
-            return (TimeHelper.serverTimestamp() - User.lastMsgTimestamp < 10000) ? Notifier.playSound() : null
+            return (TimeHelper.serverTimestamp() - User.lastMsgTimestamp < 10000) ? Notifier.playSound('newMessage') : null
           case 3:
             return (TimeHelper.serverTimestamp() - User.lastMsgTimestamp < 10000) ? Notifier.notify(doc) : null
           case 4:
-            return Notifier.playSound()
+            return Notifier.playSound('newMessage')
           case 5:
             return Notifier.notify(doc)
           default:

@@ -1,7 +1,12 @@
+Session.setDefault('sounds.mention', 'default')
+Session.setDefault('sounds.newMessage', 'sparkling_water')
+Session.setDefault('sounds.noCamera', 'horse')
+Session.setDefault('sounds.kickuser', 'magnum_shot')
+
 Notifier = {
   notify: function(msg) {
     Notifier.showNotification(msg)
-    Notifier.playSound()
+    Notifier.playSound(msg.effect ? 'newMessage' : 'mention')
   },
   showNotification: function(msg) {
     var notification = new Notification(msg.author, {
@@ -13,10 +18,10 @@ Notifier = {
     }
     setTimeout(function() {
       notification.close()
-    }, 5000)
+    }, 4000)
   },
-  playSound: function() {
-    var sound = new Audio('/audio/notification.ogg')
+  playSound: function(soundType) {
+    var sound = new Audio('/audio/' + (Session.get('sounds.' + soundType) || 'default') + '.ogg')
     sound.play()
   }
 }

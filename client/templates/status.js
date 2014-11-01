@@ -1,9 +1,10 @@
 Template.status.rendered = function() {
-  var confVarNames = ['camClose', 'titleNotifications', 'status.class', 'notificationsLevel']
+  var confVarNames = ['titleNotifications', 'notificationsLevel', 'sounds.newMessage', 'sounds.mention']
   restoreConfFromLocalStorage()
   Session.setDefault('titleNotifications', false)
   Tracker.autorun(notifyOnConnectionLost())
   Tracker.autorun(trackConfToPersist)
+
 
   function notifyOnConnectionLost() {
     var hasConnected = false
@@ -45,25 +46,19 @@ Template.status.rendered = function() {
 }
 
 Template.status.events({
-  'click #normal': setFilter(''),
-  'click #call': setFilter('grayscale'),
-  'click #dark': setFilter('invert'),
-  'click #brb': setFilter('blur'),
-  'click #lunch': setFilter('sepia'),
-
-  'click #camClose': function() {
-    Session.set('camClose', true)
-  },
-  'click #camFar': function() {
-    Session.set('camClose', false)
-  },
-
   'click .notify-conf': function(evt) {
     Session.set('notificationsLevel', parseInt(evt.currentTarget.dataset.level))
   },
 
   'click #toogleTitleNotification': function() {
     Session.set('titleNotifications', !Session.get('titleNotifications'))
+  },
+
+  'click .msg-notification-conf': function(evt) {
+    Session.set('sounds.newMessage', evt.currentTarget.id)
+  },
+  'click .mention-notification-conf': function(evt) {
+    Session.set('sounds.mention', evt.currentTarget.id)
   }
 })
 
@@ -73,11 +68,14 @@ Template.status.helpers({
   },
   titleNotifications: function() {
     return Session.get('titleNotifications')
+  },
+  messageSoundName: function() {
+    return Session.get('sounds.newMessage')
+  },
+  mentionSoundName: function() {
+    return Session.get('sounds.mention')
+  },
+  markNotifLevelActive: function(level) {
+    return Session.get('notificationsLevel') == level ? 'active' : ''
   }
 })
-
-function setFilter(name) {
-  return function() {
-    Session.set('status.class', name)
-  }
-}
