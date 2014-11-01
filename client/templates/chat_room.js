@@ -9,7 +9,6 @@ Template.chat_room.rendered = function() {
   handleNotifications()
   Session.set('roomName', this.data.roomName)
   Tracker.autorun(showMentions)
-  Tracker.autorun(notifyOnConnectionLost())
   Meteor.call('addToRoom', Session.get('roomName'), User._id)
 
   function handleNotifications() {
@@ -43,29 +42,6 @@ Template.chat_room.rendered = function() {
     mentionsToUser.forEach(function(msg) {
       Mentions.remove(msg._id)
     })
-  }
-
-  function notifyOnConnectionLost() {
-    var hasConnected = false
-    var notified = false
-    return function() {
-      hasConnected = hasConnected || Meteor.status().connected
-      if (hasConnected) {
-        // when it connects, why start watching for disconnections
-        if (!Meteor.status().connected && !notified) {
-          setTimeout(function() {
-            if (!Meteor.status().connected) {
-              $('#connectionLostModal').modal('show')
-              Notifier.notify({
-                author: 'App',
-                body: 'It seems that you\'ve lost conection with the server'
-              })
-            }
-          }, 5000)
-          notified = true
-        }
-      }
-    }
   }
 }
 
