@@ -74,5 +74,8 @@ Template.status.helpers({
   },
   mentionSoundName: function() {
     return Session.get('sounds.mention')
+  },
+  markNotifLevelActive: function(level) {
+    return Session.get('notificationsLevel') == level ? 'active' : ''
   }
 })
