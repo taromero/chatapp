@@ -1,4 +1,4 @@
-Template.rtc_video.rendered = function() {
+Template.simple_web_rtc.rendered = function() {
   var webrtc = null
   Tracker.autorun(function() {
     if (Session.get('joinCall')) {
