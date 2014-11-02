@@ -64,6 +64,14 @@ Template.status.events({
 
   'click #toggleCall': function() {
     Session.set('joinCall', !Session.get('joinCall'))
+  },
+
+  'click #call': function() {
+    Session.set('clickAndCallMode', true)
+    if (Session.get('calling')) {
+      Calls.remove(Session.get('call')._id)
+      Session.set('calling', false)
+    }
   }
 })
 
@@ -85,5 +93,8 @@ Template.status.helpers({
   },
   joinCall: function() {
     return Session.get('joinCall')
+  },
+  calling: function() {
+    return Session.get('calling')
   }
 })

@@ -35,6 +35,13 @@ Template.users.events({
       Notifier.playSound('kickuser')
     }
   },
+  'click .snapshot': function(evt) {
+    if (Session.get('clickAndCallMode')) {
+      evt.preventDefault()
+      Calls.insert({ from: User._id, to: parseFloat(evt.currentTarget.id), room: currentRoom().name, callRoom: 'green' })
+      Session.set('calling', true)
+    }
+  },
   'click #user-snapshot': function() {
     var currentFilter = Session.get('status.class')
     var toggleFilter = (!currentFilter ? 'blur' : '')

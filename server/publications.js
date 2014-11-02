@@ -17,3 +17,7 @@ Meteor.publish('rooms', function() {
 Meteor.publish('room', function(roomName) {
   return Rooms.find({ name: roomName })
 })
+
+Meteor.publish('calls', function(roomName) {
+  return Calls.find({ room: roomName })
+})
