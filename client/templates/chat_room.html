@@ -2,5 +2,12 @@
   {{> videoRecorder}}
   {{> status}}
   {{> users}}
-  {{> messages}}
+  <div>
+    <div style='float:left;width:70%'>
+      {{> messages}}
+    </div>
+    <div style='float:right;width:30%;height:100%;'>
+      {{> rtc_video}}
+    </div>
+  </div>
 </template>
