@@ -1,20 +1,22 @@
 Template.simple_web_rtc.rendered = function() {
   var webrtc = null
   Tracker.autorun(function() {
-    if (Session.get('call')) {
+    if (Session.get('call') && User.callConf != 'calling-disabled') {
       var callRoom = Session.get('call').callRoom || 'defaultRoom'
       if (webrtc) {
         webrtc.joinRoom(callRoom)
         $('#localVideo').show()
       } else {
-        webrtc = new SimpleWebRTC({
+        var rtc_options = {
           // the id/element dom element that will hold "our" video
           localVideoEl: 'localVideo',
           // the id/element dom element that will hold remote videos
           remoteVideosEl: 'remotesVideos',
           // immediately ask for camera access
           autoRequestMedia: true
-        });
+        }
+
+        webrtc = new SimpleWebRTC(rtc_options)
 
         // we have to wait until it's ready
         webrtc.on('readyToCall', function () {
