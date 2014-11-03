@@ -16,7 +16,7 @@ Template.rooms.events({
     if ($('#password').val()) { //only change password if something was set
       updatedRoom.password = $('#password').val()
     }
-    Rooms.update(room && room._id, { $set: updatedRoom })
+    Rooms.update(room && room._id, { $set: updatedRoom }, { upsert: true })
     Session.set('roomToEdit', {})
     $('#roomModal').modal('hide')
   },
