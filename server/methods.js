@@ -17,7 +17,7 @@ Meteor.methods({
     Users.update(parseFloat(userId), { $pull: { connectedTo: roomName } })
   },
   masterAuth: function(password) {
-    if (password == 'jsrocks') {
+    if (password == (process.env.MASTER_PASSWORD || 'jsrocks')) {
       return true
     } else {
       throw new Meteor.Error(401, 'Not allowed')
