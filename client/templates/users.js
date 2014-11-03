@@ -40,7 +40,12 @@ Template.users.events({
       var callerId = User._id
       var calleeId = parseFloat(evt.currentTarget.id)
       evt.preventDefault()
-      if (usersInActiveVideoChat(callerId, calleeId)) {
+      var callee = Users.findOne(calleeId)
+      if (callee.callConf == 'calling-disabled') {
+        Session.set('clickAndCallMode', false)
+        alert('user doesn\'t allow calls at this moment')
+      } else if (usersInActiveVideoChat(callerId, calleeId)) {
+        Session.set('clickAndCallMode', false)
         alert('One of the users is currently on a video chat. Wait until it hangs the other call.')
       } else {
         Calls.insert({ from: callerId, to: calleeId,
