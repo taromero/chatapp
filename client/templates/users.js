@@ -44,7 +44,7 @@ Template.users.events({
         alert('One of the users is currently on a video chat. Wait until it hangs the other call.')
       } else {
         Calls.insert({ from: callerId, to: calleeId,
-                        room: currentRoom().name, callRoom: 'green' })
+                        room: currentRoom().name, callRoom: Math.random().toString() })
       }
     }
 
