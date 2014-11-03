@@ -21,7 +21,16 @@ Notifier = {
     }, 4000)
   },
   playSound: function(soundType) {
-    var sound = new Audio('/audio/' + (Session.get('sounds.' + soundType) || 'default') + '.ogg')
-    sound.play()
+    Audios[Session.get('sounds.' + soundType) || 'default'].play()
   }
 }
+
+Audios = {}
+
+// preload sounds
+var sounds = ['default', 'sparkling_water', 'horse', 'magnum_shot', 'water_drum', 'phone_ringing']
+
+sounds.forEach(function(soundName) {
+  Audios[soundName] = new Audio('/audio/' + soundName + '.ogg')
+  Audios[soundName].load()
+})
