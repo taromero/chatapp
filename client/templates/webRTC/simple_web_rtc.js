@@ -1,8 +1,8 @@
 Template.simple_web_rtc.rendered = function() {
   var webrtc = null
   Tracker.autorun(function() {
-    if (Session.get('joinCall')) {
-      var callRoom = Session.get('joinCall').callRoom || 'defaultRoom'
+    if (Session.get('call')) {
+      var callRoom = Session.get('call').callRoom || 'defaultRoom'
       if (webrtc) {
         webrtc.joinRoom(callRoom)
         $('#localVideo').show()
@@ -34,12 +34,11 @@ Template.simple_web_rtc.rendered = function() {
   Calls.find({ $or: [{ from: User._id }, { to: User._id }] }).observe({
     added: function(call) {
       console.log('call', call)
-      Session.set('joinCall', { callRoom: call.callRoom })
       Session.set('call', call)
     },
     removed: function(call) {
       console.log('call removed')
-      Session.set('joinCall', false)
+      Session.set('call', false)
     }
   })
 }

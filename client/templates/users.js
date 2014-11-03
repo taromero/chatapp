@@ -38,8 +38,8 @@ Template.users.events({
   'click .snapshot': function(evt) {
     if (Session.get('clickAndCallMode')) {
       evt.preventDefault()
-      Calls.insert({ from: User._id, to: parseFloat(evt.currentTarget.id), room: currentRoom().name, callRoom: 'green' })
-      Session.set('calling', true)
+      Calls.insert({ from: User._id, to: parseFloat(evt.currentTarget.id),
+                      room: currentRoom().name, callRoom: 'green' })
     }
   },
   'click #user-snapshot': function() {

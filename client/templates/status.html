@@ -36,11 +36,6 @@
         <li><a class='mention-notification-conf' id='phone_ringing'>Phone ringing</a></li>
       </ul>
     </div>
-    {{#if joinCall}}
-      <button class='btn btn-danger' id='toggleCall'>Leave Call</button>
-    {{else}}
-      <button class='btn btn-succes' id='toggleCall'>Join Call</button>
-    {{/if}}
-    <button class='btn btn-succes' id='call'>{{#if calling}} Hang {{else}} Call someone{{/if}}</button>
+    <button class='btn btn-succes' id='toggleCall'>{{#if calling}} Hang {{else}} Call someone{{/if}}</button>
   </div>
 </template>
