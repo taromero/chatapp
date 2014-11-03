@@ -29,5 +29,10 @@ Meteor.methods({
     } else {
       throw new Meteor.Error(400, 'User don\'t exist anymore on the DB, auth again')
     }
+  },
+  removeRoom: function(roomId) {
+    Rooms.remove(roomId)
+    Messages.remove({ roomId: roomId })
+    Mentions.remove({ roomId: roomId })
   }
 })

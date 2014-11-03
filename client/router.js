@@ -51,7 +51,8 @@ Router.route('room', {
       Meteor.subscribe('users', this.params.room),
       Meteor.subscribe('messages', this.params.room),
       Meteor.subscribe('mentions', this.params.room),
-      Meteor.subscribe('room', this.params.room)
+      Meteor.subscribe('room', this.params.room),
+      Meteor.subscribe('calls', this.params.room)
     ]
   },
   action: function() {

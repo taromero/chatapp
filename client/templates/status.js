@@ -1,5 +1,4 @@
 Template.status.rendered = function() {
-  Session.set('joinCall', false)
   var confVarNames = ['titleNotifications', 'notificationsLevel', 'sounds.newMessage', 'sounds.mention']
   restoreConfFromLocalStorage()
   Session.setDefault('titleNotifications', false)
@@ -63,7 +62,11 @@ Template.status.events({
   },
 
   'click #toggleCall': function() {
-    Session.set('joinCall', !Session.get('joinCall'))
+    Session.set('clickAndCallMode', !Session.get('clickAndCallMode'))
+    if (Session.get('call')) {
+      Calls.remove(Session.get('call')._id)
+      Session.set('call', null)
+    }
   }
 })
 
@@ -83,7 +86,7 @@ Template.status.helpers({
   markNotifLevelActive: function(level) {
     return Session.get('notificationsLevel') == level ? 'active' : ''
   },
-  joinCall: function() {
-    return Session.get('joinCall')
+  calling: function() {
+    return Session.get('call')
   }
 })

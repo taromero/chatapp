@@ -22,7 +22,7 @@ Template.rooms.events({
   },
   'click .delete': function(evt) {
     var roomId = evt.currentTarget.id
-    Rooms.remove(roomId)
+    Meteor.call('removeRoom', roomId)
   },
   'click .edit': function(evt) {
     var roomToEdit = Rooms.findOne(evt.currentTarget.id, { fields: { password: 0 } })

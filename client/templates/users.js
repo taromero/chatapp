@@ -35,6 +35,28 @@ Template.users.events({
       Notifier.playSound('kickuser')
     }
   },
+  'click .snapshot': function(evt) {
+    if (Session.get('clickAndCallMode')) {
+      var callerId = User._id
+      var calleeId = parseFloat(evt.currentTarget.id)
+      evt.preventDefault()
+      if (usersInActiveVideoChat(callerId, calleeId)) {
+        alert('One of the users is currently on a video chat. Wait until it hangs the other call.')
+      } else {
+        Calls.insert({ from: callerId, to: calleeId,
+                        room: currentRoom().name, callRoom: 'green' })
+      }
+    }
+
+    function usersInActiveVideoChat(callerId, calleeId) {
+      var count = Calls.find({ $or: [
+        { from: { $in: [callerId, calleeId] } },
+        { to: { $in: [callerId, calleeId] } }
+      ]}).count()
+
+      return count > 0
+    }
+  },
   'click #user-snapshot': function() {
     var currentFilter = Session.get('status.class')
     var toggleFilter = (!currentFilter ? 'blur' : '')
