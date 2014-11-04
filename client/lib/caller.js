@@ -1,10 +1,7 @@
 Caller = {
   call: function(callerId, calleeId) {
     var callee = Users.findOne(calleeId)
-    if (callee.callConf == 'calling-disabled') {
-      Session.set('clickAndCallMode', false)
-      alert('user doesn\'t allow calls at this moment')
-    } else if (usersInActiveVideoChat(callerId, calleeId)) {
+    if (usersInActiveVideoChat(callerId, calleeId)) {
       Session.set('clickAndCallMode', false)
       alert('One of the users is currently on a video chat. Wait until it hangs the other call.')
     } else {
@@ -21,13 +18,11 @@ Caller = {
       return count > 0
     }
   },
-  receive: function(call) {
-
-  },
-  answer: function(callRoom, $localVideo) {
+  answer: function() {
+    var call = Session.get('call')
     if (Caller.webrtc_connection) {
-      Caller.webrtc_connection.joinRoom(callRoom)
-      $localVideo.show()
+      Caller.webrtc_connection.joinRoom(call.callRoom)
+      $('#localVideo').show()
     } else {
       var rtc_options = {
         // the id/element dom element that will hold "our" video
@@ -43,15 +38,19 @@ Caller = {
       // we have to wait until it's ready
       Caller.webrtc_connection.on('readyToCall', function () {
         // you can name it anything
-        Caller.webrtc_connection.joinRoom(callRoom)
-        $localVideo.show()
+        Caller.webrtc_connection.joinRoom(call.callRoom)
+        $('#localVideo').show()
       })
     }
   },
-  hang: function($localVideo) {
+  hang: function() {
     if (Caller.webrtc_connection) {
       Caller.webrtc_connection.leaveRoom()
-      $localVideo.hide()
+      $('#localVideo').hide()
+    }
+    if (Session.get('call')) {
+      Calls.remove(Session.get('call')._id)
+      Session.set('call', null)
     }
   }
 }

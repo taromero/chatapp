@@ -1,21 +1,20 @@
 Template.simple_web_rtc.rendered = function() {
-  var webrtc = null
   Tracker.autorun(function() {
-    if (Session.get('call')) {
-      if (User.callConf == 'calling-disabled') {
-        alert('You are trying to make a call, but you have calls disabled')
-        return;
-      }
-      var callRoom = Session.get('call').callRoom || 'defaultRoom'
-      Caller.answer(callRoom, $('#localVideo'))
-    } else {
-      Caller.hang($('#localVideo'))
+    var call = Session.get('call')
+    if (!call) {
+      // If the call has been removed, hang
+      Caller.hang()
+    } else if (call.from == User._id) {
+      // If the user made the call, automatically participate in it
+      Caller.answer()
+    } else if (call.to == User._id) {
+      // If the user is receiving a call, let him answer it or hang
+      $('#receiveCallModal').modal('show')
     }
   })
 
   Calls.find({ $or: [{ from: User._id }, { to: User._id }] }).observe({
     added: function(call) {
-      console.log('call', call)
       Session.set('call', call)
     },
     removed: function(call) {
@@ -24,3 +23,14 @@ Template.simple_web_rtc.rendered = function() {
     }
   })
 }
+
+Template.simple_web_rtc.events({
+  'click #hang': function() {
+    Caller.hang()
+    $('#receiveCallModal').modal('hide')
+  },
+  'click #answerCall': function() {
+    Caller.answer()
+    $('#receiveCallModal').modal('hide')
+  }
+})

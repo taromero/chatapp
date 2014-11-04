@@ -2,7 +2,6 @@ Template.status.rendered = function() {
   var confVarNames = ['titleNotifications', 'notificationsLevel', 'sounds.newMessage', 'sounds.mention']
   restoreConfFromLocalStorage()
   Session.setDefault('titleNotifications', false)
-  Session.setDefault('callConf', User.callConf)
   Tracker.autorun(notifyOnConnectionLost())
   Tracker.autorun(trackConfToPersist)
 
@@ -62,24 +61,16 @@ Template.status.events({
     Session.set('sounds.mention', evt.currentTarget.id)
   },
 
-  'click #toggleCall': function() {
-    Session.set('clickAndCallMode', !Session.get('clickAndCallMode'))
-    if (Session.get('call')) {
-      Calls.remove(Session.get('call')._id)
-      Session.set('call', null)
-    }
+  'click #selectCallee': function() {
+    Session.set('clickAndCallMode', true)
+  },
+
+  'click #hang': function() {
+    Caller.hang()
   },
 
   'click #toggleCallAvailability': function() {
     Users.update(User._id, { $set: { callingEnabled: !User.callingEnabled } })
-  },
-
-  'click .call-conf': function(evt) {
-    var callConf = evt.currentTarget.id
-    Session.set('callConf', callConf)
-    User.callConf = callConf
-    $.jStorage.set('user', User)
-    Users.update(User._id, { $set: { callConf: callConf } })
   }
 })
 
@@ -101,8 +92,5 @@ Template.status.helpers({
   },
   calling: function() {
     return Session.get('call')
-  },
-  callConf: function() {
-    return Session.get('callConf') || 'video-audio'
   }
 })

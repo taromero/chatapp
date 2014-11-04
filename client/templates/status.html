@@ -36,15 +36,10 @@
         <li><a class='mention-notification-conf' id='phone_ringing'>Phone ringing</a></li>
       </ul>
     </div>
-    <div class="btn-group">
-      <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-        {{callConf}} <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a class='call-conf' id='video-audio'>Video/Audio</a></li>
-        <li><a class='call-conf' id='calling-disabled'>Calling Disabled</a></li>
-      </ul>
-    </div>
-    <button class='btn btn-succes' id='toggleCall'>{{#if calling}} Hang {{else}} Call someone{{/if}}</button>
+    {{#if calling}}
+      <button class='btn btn-succes' id='hang'>Hang</button>
+    {{else}}
+      <button class='btn btn-succes' id='selectCallee'>Call someone</button>
+    {{/if}}
   </div>
 </template>
