@@ -21,6 +21,7 @@ Notifier = {
     }, 4000)
   },
   playSound: function(soundType) {
+    var standardConf = Session.get()
     Audios[Session.get('sounds.' + soundType) || 'default'].play()
   }
 }
@@ -34,3 +35,21 @@ sounds.forEach(function(soundName) {
   Audios[soundName] = new Audio('/audio/' + soundName + '.ogg')
   Audios[soundName].load()
 })
+
+var highLevelConf = {
+  silent: {
+    mention: 'default',
+    newMessage: '',
+    changeTitleOnMsg: false
+  },
+  soft: {
+    mention: 'default',
+    newMessage: 'sparkling_water',
+    changeTitleOnMsg: true
+  },
+  loud: {
+    mention: 'default',
+    newMessage: 'default',
+    changeTitleOnMsg: true
+  }
+}

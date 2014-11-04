@@ -1,5 +1,5 @@
 Template.status.rendered = function() {
-  var confVarNames = ['titleNotifications', 'notificationsLevel', 'sounds.newMessage', 'sounds.mention']
+  var confVarNames = ['titleNotifications', 'notificationsLevel', 'high-level-notification-conf', 'sounds.newMessage', 'sounds.mention']
   restoreConfFromLocalStorage()
   Session.setDefault('titleNotifications', false)
   Tracker.autorun(notifyOnConnectionLost())
@@ -46,21 +46,6 @@ Template.status.rendered = function() {
 }
 
 Template.status.events({
-  'click .notify-conf': function(evt) {
-    Session.set('notificationsLevel', parseInt(evt.currentTarget.dataset.level))
-  },
-
-  'click #toogleTitleNotification': function() {
-    Session.set('titleNotifications', !Session.get('titleNotifications'))
-  },
-
-  'click .msg-notification-conf': function(evt) {
-    Session.set('sounds.newMessage', evt.currentTarget.id)
-  },
-  'click .mention-notification-conf': function(evt) {
-    Session.set('sounds.mention', evt.currentTarget.id)
-  },
-
   'click #selectCallee': function() {
     Session.set('clickAndCallMode', true)
   },
@@ -69,8 +54,9 @@ Template.status.events({
     Caller.hang()
   },
 
-  'click #toggleCallAvailability': function() {
-    Users.update(User._id, { $set: { callingEnabled: !User.callingEnabled } })
+  'click .high-level-notify-conf': function(evt) {
+    var level = evt.currentTarget.id
+    Session.set('high-level-notification-conf', level)
   }
 })
 
@@ -78,19 +64,10 @@ Template.status.helpers({
   connected: function() {
     return Meteor.status().connected
   },
-  titleNotifications: function() {
-    return Session.get('titleNotifications')
-  },
-  messageSoundName: function() {
-    return Session.get('sounds.newMessage') || 'default'
-  },
-  mentionSoundName: function() {
-    return Session.get('sounds.mention')
-  },
-  markNotifLevelActive: function(level) {
-    return Session.get('notificationsLevel') == level ? 'active' : ''
-  },
   calling: function() {
     return Session.get('call')
+  },
+  markHighNotifLevelActive: function(level) {
+    return Session.get('high-level-notification-conf') == level ? 'active' : ''
   }
 })
