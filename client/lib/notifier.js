@@ -27,10 +27,13 @@ Notifier = {
 
 Audios = {}
 
-// preload sounds
-var sounds = ['default', 'sparkling_water', 'horse', 'magnum_shot', 'water_drum', 'phone_ringing']
+preloadSounds()
 
-sounds.forEach(function(soundName) {
-  Audios[soundName] = new Audio('/audio/' + soundName + '.ogg')
-  Audios[soundName].load()
-})
+function preloadSounds() {
+  var sounds = ['default', 'sparkling_water', 'horse', 'magnum_shot', 'water_drum', 'phone_ringing', 'stick']
+
+  sounds.forEach(function(soundName) {
+    Audios[soundName] = new Audio('/audio/' + soundName + '.ogg')
+    Audios[soundName].load()
+  })
+}
