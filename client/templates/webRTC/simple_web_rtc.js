@@ -1,35 +1,15 @@
 Template.simple_web_rtc.rendered = function() {
   var webrtc = null
   Tracker.autorun(function() {
-    if (Session.get('call') && User.callConf != 'calling-disabled') {
+    if (Session.get('call')) {
+      if (User.callConf == 'calling-disabled') {
+        alert('You are trying to make a call, but you have calls disabled')
+        return;
+      }
       var callRoom = Session.get('call').callRoom || 'defaultRoom'
-      if (webrtc) {
-        webrtc.joinRoom(callRoom)
-        $('#localVideo').show()
-      } else {
-        var rtc_options = {
-          // the id/element dom element that will hold "our" video
-          localVideoEl: 'localVideo',
-          // the id/element dom element that will hold remote videos
-          remoteVideosEl: 'remotesVideos',
-          // immediately ask for camera access
-          autoRequestMedia: true
-        }
-
-        webrtc = new SimpleWebRTC(rtc_options)
-
-        // we have to wait until it's ready
-        webrtc.on('readyToCall', function () {
-          // you can name it anything
-          webrtc.joinRoom(callRoom)
-          $('#localVideo').show()
-        })
-      }
+      Caller.answer(callRoom, $('#localVideo'))
     } else {
-      if (webrtc) {
-        webrtc.leaveRoom()
-        $('#localVideo').hide()
-      }
+      Caller.hang($('#localVideo'))
     }
   })
 
