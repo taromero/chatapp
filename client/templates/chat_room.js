@@ -6,9 +6,16 @@ Session.setDefault('picHeight', 47)
 Session.setDefault('camera.distanceFromEdge', 0)
 
 Template.chat_room.rendered = function() {
+  resetTitleOnUserFocus()
   handleNotifications()
   Tracker.autorun(showMentions)
   Meteor.call('addToRoom', currentRoom().name, User._id)
+
+  function resetTitleOnUserFocus() {
+    $(window).focus(function(){
+      document.title = 'chatapp'
+    })
+  }
 
   function handleNotifications() {
     Messages.find({ timestamp: { $gt: TimeHelper.serverTimestamp() } }).observe({

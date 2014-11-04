@@ -1,5 +1,5 @@
 Meteor.startup(function() {
-  setInterval(keepMessagesForEachRoomUnder(process.env.MAX_MESSAGES_NUMS || 40), 2*1000)
+  setInterval(keepMessagesForEachRoomUnder(parseInt(process.env.MAX_MESSAGES_NUMS) || 40), 2*1000)
 
   //TODO: find a more performant way of doing this. Notes:
   //  1. Capped collections don't work as we need to cap based on a query (each room)
