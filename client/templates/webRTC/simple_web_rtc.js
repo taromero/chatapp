@@ -1,41 +1,20 @@
 Template.simple_web_rtc.rendered = function() {
-  var webrtc = null
   Tracker.autorun(function() {
-    if (Session.get('call') && User.callConf != 'calling-disabled') {
-      var callRoom = Session.get('call').callRoom || 'defaultRoom'
-      if (webrtc) {
-        webrtc.joinRoom(callRoom)
-        $('#localVideo').show()
-      } else {
-        var rtc_options = {
-          // the id/element dom element that will hold "our" video
-          localVideoEl: 'localVideo',
-          // the id/element dom element that will hold remote videos
-          remoteVideosEl: 'remotesVideos',
-          // immediately ask for camera access
-          autoRequestMedia: true
-        }
-
-        webrtc = new SimpleWebRTC(rtc_options)
-
-        // we have to wait until it's ready
-        webrtc.on('readyToCall', function () {
-          // you can name it anything
-          webrtc.joinRoom(callRoom)
-          $('#localVideo').show()
-        })
-      }
-    } else {
-      if (webrtc) {
-        webrtc.leaveRoom()
-        $('#localVideo').hide()
-      }
+    var call = Session.get('call')
+    if (!call) {
+      // If the call has been removed, hang
+      Caller.hang()
+    } else if (call.from == User._id) {
+      // If the user made the call, automatically participate in it
+      Caller.answer()
+    } else if (call.to == User._id) {
+      // If the user is receiving a call, let him answer it or hang
+      $('#receiveCallModal').modal('show')
     }
   })
 
   Calls.find({ $or: [{ from: User._id }, { to: User._id }] }).observe({
     added: function(call) {
-      console.log('call', call)
       Session.set('call', call)
     },
     removed: function(call) {
@@ -44,3 +23,14 @@ Template.simple_web_rtc.rendered = function() {
     }
   })
 }
+
+Template.simple_web_rtc.events({
+  'click #hang': function() {
+    Caller.hang()
+    $('#receiveCallModal').modal('hide')
+  },
+  'click #answerCall': function() {
+    Caller.answer()
+    $('#receiveCallModal').modal('hide')
+  }
+})
