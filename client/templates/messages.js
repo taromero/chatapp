@@ -4,6 +4,37 @@ Template.messages.helpers({
   }
 })
 
+Template.messages.rendered = function() {
+  Tracker.autorun(autocompleteMentions)
+
+  function autocompleteMentions() {
+    var users = Users.find({}, { fields: { nick: 1 } }).fetch().map(function(user) {
+      // transform 'nick' property to be 'name', to adapt to plug-in format
+      return { username: user.nick }
+    })
+
+    recreateInput($('#user_message'))
+
+    $('#user_message').mention({
+        queryBy: ['name', 'username'],
+        emptyQuery: true,
+        typeaheadOpts: {
+            items: 20 // Max number of items you want to show
+        },
+        users: users
+    });
+
+    function recreateInput($input) {
+      // Destroy and create again the input to run mention on it again.
+      // `mention` fn doesn't seems to be able to be run multiple times on the same obj
+      var inputBk = $input
+      var parent = $input.parent()
+      $input.remove()
+      parent.prepend(inputBk)
+    }
+  }
+}
+
 Template.messages.events({
   'keypress #text_entry': function(evt) {
     if (Helpers.isEnter(evt)) {
