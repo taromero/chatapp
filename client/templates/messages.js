@@ -4,6 +4,27 @@ Template.messages.helpers({
   }
 })
 
+Template.messages.rendered = function() {
+  Tracker.autorun(autocompleteMentions)
+
+  function autocompleteMentions() {
+    var users = Users.find({}, { fields: { nick: 1 } }).fetch().map(function(user) {
+      // transform 'nick' property to be 'name', to adapt to plug-in format
+      return { username: user.nick }
+    })
+    if (users.length > 0) {
+      $('#user_message').mention({
+          queryBy: ['name', 'username'],
+          emptyQuery: true,
+          typeaheadOpts: {
+              items: 20 // Max number of items you want to show
+          },
+          users: users
+      });
+    }
+  }
+}
+
 Template.messages.events({
   'keypress #text_entry': function(evt) {
     if (Helpers.isEnter(evt)) {
