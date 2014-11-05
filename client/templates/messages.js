@@ -31,28 +31,12 @@ Template.messages.rendered = function() {
       var parent = $input.parent()
       $input.remove()
       parent.prepend(inputBk)
+      inputBk.on('keypress', function(evt) {
+        sendMessageOnEnter(evt)
+      })
     }
   }
 }
-
-Template.messages.events({
-  'keypress #text_entry': function(evt) {
-    if (Helpers.isEnter(evt)) {
-      var message = {
-        author: $('#nick').val() || $('#nick').attr('placeholder'),
-        room: currentRoom().name,
-        body: $('#text_entry').val(),
-        snapshot: Camera.takeSnapshot(),
-        timestamp: TimeHelper.serverTimestamp(),
-        effect: Session.get('status.class')
-      }
-      createMention(message)
-      Messages.insert(message)
-      User.lastMsgTimestamp = TimeHelper.serverTimestamp()
-      $('#text_entry').val('')
-    }
-  }
-})
 
 function createMention(message) {
   var regex = /@\w+/g
@@ -68,5 +52,22 @@ function createMention(message) {
         snapshot: message.snapshot
       })
     })
+  }
+}
+
+function sendMessageOnEnter(evt) {
+  if (Helpers.isEnter(evt)) {
+    var message = {
+      author: $('#nick').val() || $('#nick').attr('placeholder'),
+      room: currentRoom().name,
+      body: $('#user_message').val(),
+      snapshot: Camera.takeSnapshot(),
+      timestamp: TimeHelper.serverTimestamp(),
+      effect: Session.get('status.class')
+    }
+    createMention(message)
+    Messages.insert(message)
+    User.lastMsgTimestamp = TimeHelper.serverTimestamp()
+    $('#user_message').val('')
   }
 }

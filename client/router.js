@@ -29,7 +29,7 @@ Router.route('rooms', {
   onBeforeAction: function() {
     var user = $.jStorage.get('user')
     if (!user) {
-      this.redirect('/')
+      this.redirect('/masterAuth')
     } else {
       var that = this
       Auth.masterAuth(user.masterPassword, function(err, res) {
