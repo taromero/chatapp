@@ -8,3 +8,5 @@ insecure
 iron:router
 mizzao:timesync
 showdown
+force-ssl
+
