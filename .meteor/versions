@@ -39,6 +39,8 @@ mizzao:bootstrap-3@3.3.0
 mizzao:timesync@0.2.2
 mobile-status-bar@1.0.1
 mongo@1.0.8
+natestrauser:connection-banner@0.4.3
+natestrauser:font-awesome@4.2.0
 observe-sequence@1.0.3
 ordered-dict@1.0.1
 random@1.0.1
