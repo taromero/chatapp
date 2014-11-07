@@ -1,3 +1,7 @@
+### Known things
+
+- The simple_web_rtc lib that is used (simplewebrtc.com) had to be modified a bit to work on the minified app. We have to check for `t.transport` before calling `t.transport.push...` every time it is called because otherwise it generates an exception that causes the app fail to start. This doesn't happen on dev mode (no concatenation/minification) or if we fetch the script from a URL using the script tag (as I think this avoids the concatenation/minification).
+
 ### Deploy to heroku instructions
 
 Basically use this buildpack: https://github.com/AdmitHub/meteor-buildpack-horse.
