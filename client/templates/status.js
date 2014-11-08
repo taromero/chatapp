@@ -44,6 +44,20 @@ Template.status.events({
 
   'click #toggleCallAvailability': function() {
     Users.update(User._id, { $set: { callingEnabled: !User.callingEnabled } })
+  },
+
+  'click #createTalkyRoomLink': function() {
+    var talkyLink = 'https://talky.io/' + 'chatappp-meteor_' + Date.now()
+    addLinkToMessageInputField(talkyLink)
+
+    function addLinkToMessageInputField(talkyLink) {
+      var $msgInput = $('#user_message')
+      if ($msgInput.val()) { // If there is already text, append the link at the end
+        $msgInput.val($msgInput.val() + ' ' + talkyLink)
+      } else {
+        $msgInput.val(talkyLink)
+      }
+    }
   }
 })
 
