@@ -23,12 +23,12 @@ Template.users.events({
   'focusout #nick': updateUserNick,
   'dblclick .snapshot': function(evt) {
     var kickedOutUserId = evt.currentTarget.id
-    if (parseFloat(kickedOutUserId)) { // prevent auto kickouts
+    if (kickedOutUserId) { // prevent auto kickouts
       console.log(2)
       Mentions.insert({
         author: User.nick,
         to: 'all',
-        body: 'I removed ' + Users.findOne(parseFloat(kickedOutUserId)).nick + ' from the room',
+        body: 'I removed ' + Users.findOne(kickedOutUserId).nick + ' from the room',
         snapshot: Camera.takeSnapshot()
       })
       Meteor.call('kickout', currentRoom().name, evt.currentTarget.id)
@@ -39,7 +39,7 @@ Template.users.events({
     if (Session.get('clickAndCallMode')) {
       evt.preventDefault()
       var callerId = User._id
-      var calleeId = parseFloat(evt.currentTarget.id)
+      var calleeId = evt.currentTarget.id
       Caller.call(callerId, calleeId)
     }
   },
