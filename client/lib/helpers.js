@@ -21,6 +21,10 @@ Handlebars.registerHelper('firstTenDigits', function(timestamp) {
   return Math.floor(timestamp/1000)
 })
 
+Handlebars.registerHelper('autolink', function(text) {
+  return Autolinker.link(text)
+})
+
 currentRoom = function() {
   return Rooms.findOne()
 }
