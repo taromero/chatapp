@@ -47,19 +47,26 @@ Template.status.events({
   },
 
   'click #createTalkyRoomLink': function() {
-    var talkyLink = 'https://talky.io/' + 'chatappp-meteor_' + Date.now()
-    addLinkToMessageInputField(talkyLink)
-
-    function addLinkToMessageInputField(talkyLink) {
-      var $msgInput = $('#user_message')
-      if ($msgInput.val()) { // If there is already text, append the link at the end
-        $msgInput.val($msgInput.val() + ' ' + talkyLink)
-      } else {
-        $msgInput.val(talkyLink)
-      }
-    }
+    sendExternalRoomLink('https://talky.io/')
+  },
+  'click #createAppearInRoomLink': function() {
+    sendExternalRoomLink('https://appear.in/')
   }
 })
+
+function sendExternalRoomLink(siteBaseUrl) {
+  var externalRoomLink = siteBaseUrl + 'chatappp-meteor_' + Date.now()
+  addLinkToMessageInputField(externalRoomLink)
+
+  function addLinkToMessageInputField(talkyLink) {
+    var $msgInput = $('#user_message')
+    if ($msgInput.val()) { // If there is already text, append the link at the end
+      $msgInput.val($msgInput.val() + ' ' + talkyLink)
+    } else {
+      $msgInput.val(talkyLink)
+    }
+  }
+}
 
 Template.status.helpers({
   connected: function() {
