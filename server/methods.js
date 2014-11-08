@@ -8,13 +8,13 @@ Meteor.methods({
     }
   },
   addToRoom: function(roomName, userId) {
-    var user = Users.findOne(parseFloat(userId))
+    var user = Users.findOne(userId)
     if (!_(user.connectedTo).contains(roomName)) {
       Users.update(userId, { $push: { connectedTo: roomName } })
     }
   },
   kickout: function(roomName, userId) {
-    Users.update(parseFloat(userId), { $pull: { connectedTo: roomName } })
+    Users.update(userId, { $pull: { connectedTo: roomName } })
   },
   masterAuth: function(password) {
     if (process.env.MASTER_PASSWORD && password == process.env.MASTER_PASSWORD) {
@@ -24,7 +24,7 @@ Meteor.methods({
     }
   },
   checkUserExistance: function(userId) {
-    if (Users.find(parseFloat(userId)).count() > 0) {
+    if (Users.find(userId).count() > 0) {
       return true;
     } else {
       throw new Meteor.Error(400, 'User don\'t exist anymore on the DB, auth again')

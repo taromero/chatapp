@@ -2,34 +2,7 @@ Template.status.rendered = function() {
   var confVarNames = ['titleNotifications', 'notificationsLevel', 'sounds.newMessage', 'sounds.mention']
   restoreConfFromLocalStorage()
   Session.setDefault('titleNotifications', false)
-  Tracker.autorun(notifyOnConnectionLost())
   Tracker.autorun(trackConfToPersist)
-
-
-  function notifyOnConnectionLost() {
-    var hasConnected = false
-    var notificationTimeout = null
-    var lastConnectedState = null
-    return function() {
-      var isConnected = Meteor.status().connected
-      hasConnected = hasConnected || isConnected
-      if (hasConnected) {
-        // when it connects, why start watching for disconnections
-        if (!isConnected && (lastConnectedState != isConnected)) {
-          clearTimeout(notificationTimeout)
-          notificationTimeout = setTimeout(function() {
-            if (!isConnected) {
-              Notifier.notify({
-                author: 'App',
-                body: 'It seems that you\'ve lost conection with the server'
-              })
-            }
-          }, 1000)
-        }
-        lastConnectedState = isConnected
-      }
-    }
-  }
 
   function restoreConfFromLocalStorage() {
     confVarNames.forEach(function(varName) {
