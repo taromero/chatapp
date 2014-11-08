@@ -56,6 +56,7 @@ Template.users.events({
 
 function updateUserNick() {
   User.nick = $('#nick').val()
+  Session.set('user.nick', User.nick)
   $.jStorage.set('user', User)
   Users.upsert(User._id, { $set: { nick: User.nick } })
 }

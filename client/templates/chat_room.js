@@ -46,7 +46,11 @@ Template.chat_room.rendered = function() {
   }
 
   function showMentions() {
-    var caseInsensitiveNick = new RegExp('^' + User.nick + '$', 'i')
+    // we need to get the nick from a reactive variable, as the cursor that is made
+    // later on `Mentions.find` will have the nick of the beginning an the computation
+    // won't run again (as that cursor won't change).
+    var userNick = Session.get('user.nick') || User.nick
+    var caseInsensitiveNick = new RegExp('^' + userNick + '$', 'i')
     var mentionsToUser = Mentions.find({ to: { $in: [caseInsensitiveNick, 'all'] }, author: { $not: { $regex: caseInsensitiveNick } } })
     mentionsToUser.forEach(Notifier.notify)
     // remove them after they are displayed.
