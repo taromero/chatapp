@@ -23,13 +23,6 @@ Meteor.methods({
       throw new Meteor.Error(401, 'Not allowed')
     }
   },
-  checkUserExistance: function(userId) {
-    if (Users.find(userId).count() > 0) {
-      return true;
-    } else {
-      throw new Meteor.Error(400, 'User don\'t exist anymore on the DB, auth again')
-    }
-  },
   removeRoom: function(roomId) {
     Rooms.remove(roomId)
     Messages.remove({ roomId: roomId })

@@ -1,7 +1,9 @@
 Template.users.rendered = function() {
   Meteor.setInterval(function() {
     var snapshot = Camera.takeSnapshot()
-    Users.update(User._id, { $set: { snapshot: snapshot, effect: Session.get('status.class') } })
+    // For some reason, if we call Users.update directly here, we get an error on production:
+    // 'Server sent add for existing id'
+    Meteor.call('setSnapshot', User._id, snapshot, Session.get('status.class'))
   }, 1000)
 }
 
