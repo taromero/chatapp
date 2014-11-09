@@ -17,15 +17,17 @@ Meteor.methods({
     Users.update(userId, { $pull: { connectedTo: roomName } })
   },
   masterAuth: function(password) {
-    if (process.env.MASTER_PASSWORD && password == process.env.MASTER_PASSWORD) {
+    var masterPassword = Meteor.settings.master_password
+    if (masterPassword && password == masterPassword) {
       return true
     } else {
       throw new Meteor.Error(401, 'Not allowed')
     }
   },
   removeRoom: function(roomId) {
+    var room = Rooms.findOne(roomId)
     Rooms.remove(roomId)
-    Messages.remove({ roomId: roomId })
-    Mentions.remove({ roomId: roomId })
+    Messages.remove({ room: room.name })
+    Mentions.remove({ room: room.name })
   }
 })

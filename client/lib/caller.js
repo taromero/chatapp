@@ -2,7 +2,6 @@ Caller = {
   call: function(callerId, calleeId) {
     var callee = Users.findOne(calleeId)
     if (usersInActiveVideoChat(callerId, calleeId)) {
-      Session.set('clickAndCallMode', false)
       alert('One of the users is currently on a video chat. Wait until it hangs the other call.')
     } else {
       Calls.insert({ from: callerId, to: calleeId,

@@ -35,7 +35,11 @@ Template.status.events({
   },
 
   'click #selectCallee': function() {
-    Session.set('clickAndCallMode', true)
+    Session.set('clickSnapshotAction', 'call')
+  },
+
+  'click #notifyWhenSomeoneBack': function() {
+    Session.set('clickSnapshotAction', 'notifyWhenBack')
   },
 
   'click #hang': function() {

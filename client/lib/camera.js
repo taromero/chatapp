@@ -1,4 +1,7 @@
 Session.set('picToCanvasRatio', 2.6) // empirically obtained :). TODO: understand this number
+Session.setDefault('picWidth', 58)
+Session.setDefault('picHeight', 47)
+Session.setDefault('camera.distanceFromEdge', 0)
 
 // this obj is initialized on 'video' template
 Camera = {

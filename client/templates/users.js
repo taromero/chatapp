@@ -26,10 +26,10 @@ Template.users.events({
   'dblclick .snapshot': function(evt) {
     var kickedOutUserId = evt.currentTarget.id
     if (kickedOutUserId) { // prevent auto kickouts
-      console.log(2)
       Mentions.insert({
         author: User.nick,
         to: 'all',
+        room: Rooms.findOne().name,
         body: 'I removed ' + Users.findOne(kickedOutUserId).nick + ' from the room',
         snapshot: Camera.takeSnapshot()
       })
@@ -38,12 +38,27 @@ Template.users.events({
     }
   },
   'click .snapshot': function(evt) {
-    if (Session.get('clickAndCallMode')) {
-      evt.preventDefault()
-      var callerId = User._id
-      var calleeId = evt.currentTarget.id
-      Caller.call(callerId, calleeId)
+    evt.preventDefault()
+    switch (Session.get('clickSnapshotAction')) {
+      case 'call':
+        var callerId = User._id
+        var calleeId = evt.currentTarget.id
+        Caller.call(callerId, calleeId)
+        break;
+      case 'notifyWhenBack':
+        $(evt.currentTarget).addClass('notifyWhenBack')
+        imageComparator(evt.currentTarget).onDiff(function() {
+          Mentions.insert({
+            from: 'system',
+            to: User.nick,
+            room: Rooms.findOne().name,
+            body: 'He\'s back, in pog form!',
+            snapshot: evt.currentTarget.src
+          })
+        })
+        break
     }
+    Session.set('clickSnapshotAction', null)
   },
   'click #user-snapshot': function() {
     var currentFilter = Session.get('status.class')
