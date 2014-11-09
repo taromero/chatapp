@@ -26,7 +26,6 @@ Template.users.events({
   'dblclick .snapshot': function(evt) {
     var kickedOutUserId = evt.currentTarget.id
     if (kickedOutUserId) { // prevent auto kickouts
-      console.log(2)
       Mentions.insert({
         author: User.nick,
         to: 'all',

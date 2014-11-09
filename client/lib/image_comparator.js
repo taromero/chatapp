@@ -6,10 +6,8 @@ imageComparator = function(imgElem) {
       var lastSnapshot = null
       var comparisonInterval = setInterval(function() {
         if (lastSnapshot) {
-          var api = resemble(imgElem.src).compareTo(lastSnapshot).onComplete(function(data) {
-            console.log('data.misMatchPercentage ' , data.misMatchPercentage);
+          resemble(imgElem.src).compareTo(lastSnapshot).onComplete(function(data) {
             if (data.misMatchPercentage > diffThreshold) {
-              console.log('diff detected')
               clearInterval(comparisonInterval)
               cb()
             }

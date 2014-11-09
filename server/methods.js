@@ -24,8 +24,9 @@ Meteor.methods({
     }
   },
   removeRoom: function(roomId) {
+    var room = Rooms.findOne(roomId)
     Rooms.remove(roomId)
-    Messages.remove({ roomId: roomId })
-    Mentions.remove({ roomId: roomId })
+    Messages.remove({ room: room.name })
+    Mentions.remove({ room: room.name })
   }
 })
