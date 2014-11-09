@@ -46,6 +46,7 @@ Template.users.events({
         Caller.call(callerId, calleeId)
         break;
       case 'notifyWhenBack':
+        $(evt.currentTarget).addClass('notifyWhenBack')
         imageComparator(evt.currentTarget).onDiff(function() {
           Mentions.insert({
             from: 'system',
