@@ -17,7 +17,8 @@ Meteor.methods({
     Users.update(userId, { $pull: { connectedTo: roomName } })
   },
   masterAuth: function(password) {
-    if (process.env.MASTER_PASSWORD && password == process.env.MASTER_PASSWORD) {
+    var masterPassword = Meteor.settings.master_password
+    if (masterPassword && password == masterPassword) {
       return true
     } else {
       throw new Meteor.Error(401, 'Not allowed')

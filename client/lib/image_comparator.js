@@ -2,7 +2,7 @@
 imageComparator = function(imgElem) {
   return {
     onDiff: function(cb) {
-      var diffThreshold = 20 // % (when nobody is around the diff is ~10%)
+      var diffThreshold = Meteor.settings.public.imageDiffThreshold || 20 // % (when nobody is around the diff is ~10%)
       var lastSnapshot = null
       var notified = false
       var comparisonInterval = setInterval(function() {

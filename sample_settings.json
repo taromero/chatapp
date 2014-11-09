@@ -1,0 +1,7 @@
+{
+  "public": {
+    "imageDiffThreshold": 30,
+    "max_messages_per_room": 10
+  },
+  "master_password": "1234"
+}
