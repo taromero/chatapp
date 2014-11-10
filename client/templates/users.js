@@ -48,10 +48,8 @@ Template.users.events({
       case 'notifyWhenBack':
         $(evt.currentTarget).addClass('notifyWhenBack')
         imageComparator(evt.currentTarget).onDiff(function() {
-          Mentions.insert({
-            from: 'system',
-            to: User.nick,
-            room: Rooms.findOne().name,
+          Notifier.showNotification({
+            author: 'App',
             body: 'He\'s back, in pog form!',
             snapshot: evt.currentTarget.src
           })
