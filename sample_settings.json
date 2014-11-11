@@ -1,7 +1,8 @@
 {
   "public": {
     "imageDiffThreshold": 30,
-    "max_messages_per_room": 10
+    "max_messages_per_room": 100,
+    "snapshot_refresh_interval": 5000
   },
   "master_password": "1234"
 }

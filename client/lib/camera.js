@@ -33,6 +33,17 @@ Camera = {
       return Camera.canvas.toDataURL('image/' + Session.get('imageType'))
     }
   },
+  keepUserSnapshotUpdated: function() {
+    Camera.updateUserSnapshot()
+    var snapshopInterval = Meteor.settings.public.snapshot_refresh_interval || 2500
+    Meteor.setInterval(Camera.updateUserSnapshot, snapshopInterval)
+  },
+  updateUserSnapshot: function() {
+    var snapshot = Camera.takeSnapshot()
+    // For some reason, if we call Users.update directly here, we get an error on production:
+    // 'Server sent add for existing id'
+    Meteor.call('setSnapshot', User._id, snapshot, Session.get('status.class'))
+  },
   UI: {
     chromeZoom: function(evt) {
       evt.preventDefault();
