@@ -1,7 +1,6 @@
 Template.status.rendered = function() {
-  var confVarNames = ['titleNotifications', 'notificationsLevel', 'sounds.newMessage', 'sounds.mention']
+  var confVarNames = ['notificationsLevel', 'sounds.newMessage', 'sounds.mention']
   restoreConfFromLocalStorage()
-  Session.setDefault('titleNotifications', false)
   Tracker.autorun(trackConfToPersist)
 
   function restoreConfFromLocalStorage() {
@@ -23,10 +22,6 @@ Template.status.events({
     Session.set('notificationsLevel', parseInt(evt.currentTarget.dataset.level))
   },
 
-  'click #toogleTitleNotification': function() {
-    Session.set('titleNotifications', !Session.get('titleNotifications'))
-  },
-
   'click .msg-notification-conf': function(evt) {
     Session.set('sounds.newMessage', evt.currentTarget.id)
   },
@@ -34,50 +29,34 @@ Template.status.events({
     Session.set('sounds.mention', evt.currentTarget.id)
   },
 
-  'click #selectCallee': function() {
-    Session.set('clickSnapshotAction', 'call')
-  },
-
   'click #notifyWhenSomeoneBack': function() {
     Session.set('clickSnapshotAction', 'notifyWhenBack')
   },
 
-  'click #hang': function() {
-    Caller.hang()
-  },
+  'click #createExternalRoomLink': function() {
+    sendExternalRoomLink(Meteor.settings.public.external_video_chat_url)
 
-  'click #toggleCallAvailability': function() {
-    Users.update(User._id, { $set: { callingEnabled: !User.callingEnabled } })
-  },
+    function sendExternalRoomLink(siteBaseUrl) {
+      var externalRoomLink = siteBaseUrl + 'chatappp-meteor_' + Date.now()
+      addLinkToMessageInputField(externalRoomLink)
+      $('#user_message').focus()
 
-  'click #createTalkyRoomLink': function() {
-    sendExternalRoomLink('https://talky.io/')
+      function addLinkToMessageInputField(externalRoomLink) {
+        var $msgInput = $('#user_message')
+        if ($msgInput.val()) { // If there is already text, append the link at the end
+          $msgInput.val($msgInput.val() + ' ' + externalRoomLink + ' ')
+        } else {
+          $msgInput.val(externalRoomLink + ' ')
+        }
+      }
+    }
   },
-  'click #createAppearInRoomLink': function() {
-    sendExternalRoomLink('https://appear.in/')
-  }
 })
 
-function sendExternalRoomLink(siteBaseUrl) {
-  var externalRoomLink = siteBaseUrl + 'chatappp-meteor_' + Date.now()
-  addLinkToMessageInputField(externalRoomLink)
-
-  function addLinkToMessageInputField(talkyLink) {
-    var $msgInput = $('#user_message')
-    if ($msgInput.val()) { // If there is already text, append the link at the end
-      $msgInput.val($msgInput.val() + ' ' + talkyLink)
-    } else {
-      $msgInput.val(talkyLink)
-    }
-  }
-}
 
 Template.status.helpers({
   connected: function() {
     return Meteor.status().connected
-  },
-  titleNotifications: function() {
-    return Session.get('titleNotifications')
   },
   messageSoundName: function() {
     return Session.get('sounds.newMessage') || 'default'

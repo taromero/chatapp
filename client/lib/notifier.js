@@ -55,19 +55,15 @@ function handleNotifications() {
       if (User.nick == doc.author) {
         return;
       }
-      if (Session.get('titleNotifications')) {
-        document.title = doc.body
-      }
+
+      document.title = doc.body
+
       switch (Session.get('notificationsLevel')) {
         case 1:
           return null
         case 2:
-          return (TimeHelper.serverTimestamp() - User.lastMsgTimestamp < 10000) ? Notifier.playSound('newMessage') : null
-        case 3:
-          return (TimeHelper.serverTimestamp() - User.lastMsgTimestamp < 10000) ? Notifier.notify(doc) : null
-        case 4:
           return Notifier.playSound('newMessage')
-        case 5:
+        case 3:
           return Notifier.notify(doc)
         default:
           //do nothing

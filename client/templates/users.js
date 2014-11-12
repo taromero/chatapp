@@ -35,11 +35,6 @@ Template.users.events({
   'click .snapshot': function(evt) {
     evt.preventDefault()
     switch (Session.get('clickSnapshotAction')) {
-      case 'call':
-        var callerId = User._id
-        var calleeId = evt.currentTarget.id
-        Caller.call(callerId, calleeId)
-        break;
       case 'notifyWhenBack':
         $(evt.currentTarget).addClass('notifyWhenBack')
         imageComparator(evt.currentTarget).onDiff(function() {
