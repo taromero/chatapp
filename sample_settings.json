@@ -3,7 +3,8 @@
     "imageDiffThreshold": 30,
     "max_messages_per_room": 100,
     "snapshot_refresh_interval": 5000,
-    "snapshot_persist_interval": 1000
+    "snapshot_persist_interval": 1000,
+    "external_video_chat_url": "https://talky.io/"
   },
   "master_password": "1234"
 }
