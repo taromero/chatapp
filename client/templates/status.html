@@ -1,11 +1,6 @@
 <template name='status'>
   <div>
     <div style='float:left'>
-    {{#if connected}}
-      <span class="label label-success">Connection: Ok</span>
-    {{else}}
-    <span class="label label-danger">Disconnected</span>
-    {{/if}}
     </div>
     <div class="btn-group">
       <button class="btn btn-default notify-conf {{markNotifLevelActive 1}}" data-level='1'>1</button>
@@ -40,10 +35,10 @@
     {{#if calling}}
       <button class='btn btn-succes' id='hang'>Hang</button>
     {{else}}
-      <button class='btn btn-succes' id='selectCallee'>Call someone</button>
+      <button class='btn btn-succes' id='selectCallee'>Call</button>
     {{/if}}
-    <button class='btn btn-success' id='createTalkyRoomLink'>Create Talky Room Link</button>
-    <button class='btn btn-info' id='createAppearInRoomLink'>Create AppearIn Room Link</button>
-    <button class='btn btn-info' id='notifyWhenSomeoneBack'>Notify when someone is back</button>
+    <button class='btn btn-success' id='createTalkyRoomLink'>Talky Room</button>
+    <button class='btn btn-info' id='createAppearInRoomLink'>AppearIn Room</button>
+    <button class='btn btn-info' id='notifyWhenSomeoneBack'>Notify when back</button>
   </div>
 </template>

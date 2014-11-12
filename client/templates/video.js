@@ -16,7 +16,6 @@ Template.videoRecorder.rendered = function() {
     Session.set('acceptedCamera', true)
     Camera.video.src = window.URL.createObjectURL(stream)
     Camera.localMediaStream = stream
-    setTimeout(Camera.updateUserSnapshot, 500) //leave some time to be able to fetch a picture
   }, function (err, res) {
     console.log('err: ', err)
     console.log('res: ', res)

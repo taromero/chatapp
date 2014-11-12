@@ -34,12 +34,26 @@ Camera = {
     }
   },
   keepUserSnapshotUpdated: function() {
-    Camera.updateUserSnapshot()
-    var snapshopInterval = Meteor.settings.public.snapshot_refresh_interval || 2500
-    Meteor.setInterval(Camera.updateUserSnapshot, snapshopInterval)
+    Tracker.autorun(function() {
+      var persistSnapshotInterval = Meteor.settings.public.snapshot_refresh_interval
+      var userSelfRefreshInterval = Meteor.settings.public.snapshot_persist_interval
+      counter = 0
+      Meteor.setInterval(function() {
+        var snapshot = Camera.updateUserSnapshot()
+        counter += userSelfRefreshInterval
+        if (counter >= persistSnapshotInterval) {
+          Camera.saveUserSnapshot(snapshot)
+          counter = 0
+        }
+      }, userSelfRefreshInterval)
+    })
   },
   updateUserSnapshot: function() {
     var snapshot = Camera.takeSnapshot()
+    $('#user-snapshot').attr('src', snapshot)
+  },
+  saveUserSnapshot: function(snapshot) {
+    snapshot = snapshot || Camera.takeSnapshot()
     // For some reason, if we call Users.update directly here, we get an error on production:
     // 'Server sent add for existing id'
     Meteor.call('setSnapshot', User._id, snapshot, Session.get('status.class'))
