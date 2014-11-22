@@ -1,3 +1,7 @@
+Template.rooms.rendered = function() {
+  $('.modal-trigger').leanModal()
+}
+
 Template.rooms.helpers({
   rooms: function() {
     return Rooms.find()
@@ -18,7 +22,6 @@ Template.rooms.events({
     }
     Rooms.update(room && room._id, { $set: updatedRoom }, { upsert: true })
     Session.set('roomToEdit', {})
-    $('#roomModal').modal('hide')
   },
   'click .delete': function(evt) {
     var roomId = evt.currentTarget.id
@@ -27,6 +30,5 @@ Template.rooms.events({
   'click .edit': function(evt) {
     var roomToEdit = Rooms.findOne(evt.currentTarget.id, { fields: { password: 0 } })
     Session.set('roomToEdit', roomToEdit)
-    $('#roomModal').modal('show')
   }
 })

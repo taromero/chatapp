@@ -1,6 +1,6 @@
 <template name='rooms'>
   <div>
-    <table class="table table-striped">
+    <table class='bordered hoverable centered'>
       <thead>
         <tr>
           <th>Name</th>
@@ -18,33 +18,24 @@
               {{imageType}}
             </td>
             <td>
-              <button class='btn btn-alert edit' id='{{_id}}'>Edit</button>
-              <button class='btn btn-alert delete' id='{{_id}}'>Delete</button>
+              <a class='edit waves-effect waves-light btn modal-trigger' id='{{_id}}' href='#roomModal'>Edit</a>
+              <a class='waves-effect waves-light btn delete' id='{{_id}}'>Delete</a>
             </td>
           </tr>
         {{/each}}
       </tbody>
     </table>
-    <button class="btn" data-toggle="modal" data-target="#roomModal">Create new room</button>
+    <a class='waves-effect waves-light btn modal-trigger' href='#roomModal'>Create new room</a>
   </div>
 
-  <div class="modal fade"  id="roomModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title">Modal title</h4>
-        </div>
-        <div class="modal-body">
-          <input id='name' placeholder="Room's name" value="{{roomToEdit.name}}" class='form-control'/>
-          <input id='password' placeholder="Room's password" type='password' value="{{roomToEdit.password}}" class='form-control'/>
-          <input id='imageType' placeholder="Image Type [jpeg, png] for snapshots" value="{{roomToEdit.imageType}}" class='form-control'/>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id='upsert'>Save changes</button>
-        </div>
-      </div>
+  <div id='roomModal' class='modal'>
+    <h4>Create/edit room</h4>
+    <div>
+      <input id='name' placeholder="Room's name" value='{{roomToEdit.name}}' class='form-control'/>
+      <input id='password' placeholder="Room's password" type='password' value='{{roomToEdit.password}}' class='form-control'/>
+      <input id='imageType' placeholder='Image Type [jpeg, png] for snapshots' value='{{roomToEdit.imageType}}' class='form-control'/>
     </div>
+    <a href='#' class='waves-effect btn flat modal_close'>Close</a>
+    <a href='#' class='waves-effect btn flat modal_close' id='upsert'>Save changes</a>
   </div>
 </template>

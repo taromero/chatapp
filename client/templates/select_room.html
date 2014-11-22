@@ -1,6 +1,6 @@
 <template name='select_room'>
   <div>
-    <table class="table table-striped">
+    <table class="bordered hoverable centered">
       <thead>
         <tr>
           <th>Name</th>
@@ -14,7 +14,7 @@
               {{name}}
             </td>
             <td>
-              <button class='btn btn-alert enterRoom' id='{{name}}'>Enter</button>
+              <a class='waves-effect waves-light btn enterRoom' id='{{name}}'>Enter</a>
             </td>
           </tr>
         {{/each}}
