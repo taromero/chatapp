@@ -1,36 +1,24 @@
 <template name='status'>
   <div>
-    <div style='float:left'>
-    </div>
-    <div class="btn-group">
-      <a class='waves-effect waves-light btn dropdown-button' data-activates='dropdown1'><i class='mdi-hardware-keyboard-arrow-down'></i>Notifications {{notificationsLevel}}</a>
-      <ul id='dropdown1' class='dropdown-content' style='display: none;'>
-        <li class='notify-conf' data-level='1'>1 - Only notifications</li>
-        <li class='notify-conf' data-level='2'>2 - Sound always</li>
-        <li class='notify-conf' data-level='3'>3 - Notification always</li>
-      </ul>
-    </div>
-    <div class="btn-group">
-      <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-        {{messageSoundName}} <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a class='msg-notification-conf' id='default'>Default</a></li>
-        <li><a class='msg-notification-conf' id='stick'>Stick</a></li>
-        <li><a class='msg-notification-conf' id='water_drum'>Water Drum</a></li>
-        <li><a class='msg-notification-conf' id='sparkling_water'>Sparkling</a></li>
-      </ul>
-    </div>
-    <div class="btn-group">
-      <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-        {{mentionSoundName}} <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a class='mention-notification-conf' id='default'>Default</a></li>
-        <li><a class='mention-notification-conf' id='phone_ringing'>Phone ringing</a></li>
-      </ul>
-    </div>
-    <button class='btn btn-success' id='createExternalRoomLink'>Create video room</button>
-    <button class='btn btn-info' id='notifyWhenSomeoneBack'>Notify when back</button>
+    <a class='waves-effect waves-light btn dropdown-button' data-activates='notification_dd'><i class='mdi-hardware-keyboard-arrow-down'></i>Notifications {{notificationsLevel}}</a>
+    <ul id='notification_dd' class='dropdown-content' style='display: none;'>
+      <li class='notify-conf' data-level='1'>1 - Only notifications</li>
+      <li class='notify-conf' data-level='2'>2 - Sound always</li>
+      <li class='notify-conf' data-level='3'>3 - Notification always</li>
+    </ul>
+    <a class='waves-effect waves-light btn dropdown-button' data-activates='msg_sound_dd'><i class='mdi-hardware-keyboard-arrow-down'></i>{{messageSoundName}}</a>
+    <ul id='msg_sound_dd' class='dropdown-content' style='display: none;'>
+      <li class='msg-notification-conf' id='default'>Default</li>
+      <li class='msg-notification-conf' id='stick'>Stick</li>
+      <li class='msg-notification-conf' id='water_drum'>Water Drum</li>
+      <li class='msg-notification-conf' id='sparkling_water'>Sparkling</li>
+    </ul>
+    <a class='waves-effect waves-light btn dropdown-button' data-activates='notif_sound_dd'><i class='mdi-hardware-keyboard-arrow-down'></i>{{mentionSoundName}}</a>
+    <ul id='notif_sound_dd' class='dropdown-content' style='display: none;'>
+      <li class='mention-notification-conf' id='default'>Default</li>
+      <li class='mention-notification-conf' id='phone_ringing'>Phone ringing</li>
+    </ul>
+    <a class='waves-effect waves-light btn' id='createExternalRoomLink'>Create video room</a>
+    <a class='waves-effect waves-light btn' id='notifyWhenSomeoneBack'>Notify when back</a>
   </div>
 </template>

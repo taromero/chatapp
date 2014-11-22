@@ -19,6 +19,9 @@ $.fn.dropdown = function () {
   activates.on('click', function(e){ // Mouse out
     activates.hide({duration: 150, easing: 'easeOutCubic'});
   });
+  activates.on('mouseleave', function(e){ // Mouse out
+    activates.hide({duration: 150, easing: 'easeOutCubic'});
+  });
 
   // Window Resize Reposition
   $(window).on('resize', function(){

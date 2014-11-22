@@ -1,5 +1,9 @@
 Template.status.rendered = function() {
-  $('.dropdown-button').dropdown();
+  $('.dropdown-button').each(function() {
+    $(this).dropdown()
+  })
+  // display effect when clicking a button (materialize fix, this should work out of the box)
+  Waves.displayEffect()
   var confVarNames = ['notificationsLevel', 'sounds.newMessage', 'sounds.mention']
   restoreConfFromLocalStorage()
   Tracker.autorun(trackConfToPersist)
