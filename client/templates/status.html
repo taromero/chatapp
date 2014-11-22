@@ -3,9 +3,12 @@
     <div style='float:left'>
     </div>
     <div class="btn-group">
-      <button class="btn btn-default notify-conf {{markNotifLevelActive 1}}" data-level='1'>1</button>
-      <button class="btn btn-default notify-conf {{markNotifLevelActive 2}}" data-level='2'>2</button>
-      <button class="btn btn-default notify-conf {{markNotifLevelActive 3}}" data-level='3'>3</button>
+      <a class='waves-effect waves-light btn dropdown-button' data-activates='dropdown1'><i class='mdi-hardware-keyboard-arrow-down'></i>Notifications {{notificationsLevel}}</a>
+      <ul id='dropdown1' class='dropdown-content' style='display: none;'>
+        <li class='notify-conf' data-level='1'>1 - Only notifications</li>
+        <li class='notify-conf' data-level='2'>2 - Sound always</li>
+        <li class='notify-conf' data-level='3'>3 - Notification always</li>
+      </ul>
     </div>
     <div class="btn-group">
       <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">

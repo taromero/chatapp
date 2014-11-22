@@ -1,9 +1,12 @@
 <template name='messages'>
   <div>
     <div>
-      <input type='text' class='form-control' id='user_message' placeholder='Enter your message' style='width:100%'/>
+      <div class="input-field">
+        <input id="user_message" type="text" required>
+        <label for="user_message">Enter your message</label>
+      </div>
     </div>
-    <table class="table table-striped table-bordered">
+    <table class="striped">
       <thead>
         <tr>
           <th style='width:7%;'>When</th>

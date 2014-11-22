@@ -1,4 +1,5 @@
 Template.status.rendered = function() {
+  $('.dropdown-button').dropdown();
   var confVarNames = ['notificationsLevel', 'sounds.newMessage', 'sounds.mention']
   restoreConfFromLocalStorage()
   Tracker.autorun(trackConfToPersist)
@@ -69,5 +70,8 @@ Template.status.helpers({
   },
   calling: function() {
     return Session.get('call')
+  },
+  notificationsLevel: function() {
+    return Session.get('notificationsLevel')
   }
 })
