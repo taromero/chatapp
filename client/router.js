@@ -59,22 +59,17 @@ Router.route('room', {
     this.ready() ? this.render() : this.render('loading')
   },
   onBeforeAction: function() {
-    var user = $.jStorage.get('user')
+    var router = this
+    var user = Meteor.user()
     var roomName = this.params.room
     if (!user) {
       this.redirect('/auth/' + roomName)
     } else {
-      var that = this
-      Auth.checkUserExistance(user._id, function(err, res) {
-        if (err) {
-          console.error(err)
-          $.jStorage.deleteKey('user')
-          that.redirect('/auth/' + roomName)
-        } else {
-          Auth.toRoom(user.passwords[roomName], roomName, function(err) {
-            err && that.redirect('/auth/' + roomName)
-          })
-        }
+      if (!user.passwords) {
+        user.passwords = {}
+      }
+      Auth.toRoom(user.passwords[roomName], roomName, function(err) {
+        err && router.redirect('/auth/' + roomName)
       })
     }
   }

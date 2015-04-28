@@ -1,0 +1,20 @@
+{
+  "public": {
+    "imageDiffThreshold": 30,
+    "max_messages_per_room": 100,
+    "snapshot_refresh_interval": 5000,
+    "snapshot_persist_interval": 1000,
+    "external_video_chat_url": "https://talky.io/"
+  },
+  "master_password": "1234",
+  "oauth": {
+    "twitter": {
+      "consumerKey": "4ksUxFfWiSYjXY4jm7YZ43j4B",
+      "secret": "ZtSGcK83lzlwCYJMtwccBVVRu6CJIgV5pryDlTe6fVXzh6hLED"
+    },
+    "google": {
+      "clientId": "460284928048-ildm806u4k64k778a7rk5nbq818pimed.apps.googleusercontent.com",
+      "secret": "kljnX2tHYHb130wLeoT21aDn"
+    }
+  }
+}

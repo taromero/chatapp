@@ -3,7 +3,7 @@ Meteor.publish('messages', function(roomName) {
 })
 
 Meteor.publish('users', function(roomName) {
-  return Users.find({ connectedTo: { $elemMatch: { $in: [roomName] } } })
+  return Meteor.users.find({ connectedTo: { $elemMatch: { $in: [roomName] } } })
 })
 
 Meteor.publish('mentions', function(roomName) {

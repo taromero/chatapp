@@ -8,7 +8,7 @@ Template.messages.rendered = function() {
   Tracker.autorun(autocompleteMentions)
 
   function autocompleteMentions() {
-    var users = Users.find({}, { fields: { nick: 1 } }).fetch().map(function(user) {
+    var users = Meteor.users.find({}, { fields: { nick: 1 } }).fetch().map(function(user) {
       // transform 'nick' property to be 'name', to adapt to plug-in format
       return { username: user.nick }
     })
