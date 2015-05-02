@@ -1,4 +1,5 @@
 Meteor.startup(function() {
+  Oauth.configureProviders()
   setInterval(keepMessagesForEachRoomUnder(Meteor.settings.public.max_messages_per_room || 40), 2*1000)
 
   //TODO: find a more performant way of doing this. Notes:

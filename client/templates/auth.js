@@ -5,20 +5,10 @@ Template.auth.rendered = function() {
 Template.auth.events({
   'keypress #password': function(evt) {
     if (Helpers.isEnter(evt)) {
-      var defaultUser = { passwords: {}, nick: 'defaultName', connectedTo: [] }
-      var user = $.jStorage.get('user') || defaultUser
       var roomName = Session.get('auth.roomName')
       var password = $('#password').val()
       Auth.toRoom(password, roomName, function(err, res) {
         if (err) return alert(err)
-        user.passwords[roomName] = password
-        if (user._id) {
-          Users.update({ _id: user._id }, user)
-        } else {
-          var _id = Users.insert(user)
-          user._id = _id
-        }
-        $.jStorage.set('user', user)
         Router.go('/rooms/' + roomName)
       })
     }
@@ -41,3 +31,4 @@ Template.masterAuth.events({
     }
   }
 })
+
